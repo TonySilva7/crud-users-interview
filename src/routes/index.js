@@ -1,5 +1,5 @@
 import { Switch } from 'react-router-dom';
-import Dashboard from '../pages/Dashboard';
+import Dashboard from '../pages/Dashboard/dashboard';
 import MyRoute from './MyRoute';
 
 export default function AllRoutes() {
