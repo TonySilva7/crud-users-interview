@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const WrapContainer = styled.div`
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -63,58 +63,79 @@ export const LoginArea = styled.header`
 `;
 
 export const LoginWrap = styled.footer`
-	background-color: #dfc2f270;
 	width: 25rem;
 	height: 22rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	flex-direction: column;
-	border-radius: 0 0 1rem 1rem;
-	box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
 
 	& > form {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: space-around;
-		margin-top: 1.5em;
-		width: 70%;
-		height: 70%;
+		/* justify-content: space-around; */
+		/* margin-top: 1.5em; */
+
+		& > div {
+			display: inherit;
+			flex-direction: inherit;
+			align-items: inherit;
+
+			width: 25rem;
+			height: 17rem;
+			padding: 2rem;
+			border-radius: 0 0 1rem 1rem;
+			box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
+			/* background-color: #dfc2f270; */
+			background: rgb(107, 108, 163);
+			background: linear-gradient(2deg, #bcb3cf 34%, #dfc2f259 100%);
+			z-index: 1;
+
+			div {
+				svg {
+					fill: var(--purple-logo);
+				}
+
+				input:active {
+					border: red;
+				}
+			}
+			/* input {
+				margin-bottom: 15px;
+				height: 35px;
+				width: 100%;
+				border: 0;
+				border-radius: 4px;
+				padding: 10px;
+				font-size: 15px;
+				color: #252437;
+				background-color: #fff;
+			} */
+		}
+
+		/* & > button {
+			height: 4rem;
+			width: 15rem;
+			margin-top: -0.5rem;
+			border: 0;
+			border-radius: 0 0 1rem 1rem;
+			background-color: #252437;
+			background-color: var(--purple-logo);
+			color: #fff;
+			font-size: 1.2em;
+		} */
 	}
 
-	& > form > h1 {
+	/* & > form > h1 {
 		text-align: center;
 		margin-bottom: 0.5em;
 		color: #252437;
-	}
+	} */
 
-	& > form > input {
-		margin-bottom: 15px;
-		height: 35px;
-		width: 100%;
-		border: 0;
-		border-radius: 4px;
-		padding: 10px;
-		font-size: 15px;
-		color: #252437;
-		background-color: #fff;
-	}
-
-	& > form > button {
-		height: 35px;
-		width: 70%;
-		border: 0;
-		border-radius: 4px;
-		/* background-color: #252437; */
-		background-color: var(--purple-logo);
-		color: #fff;
-		font-size: 1.2em;
-	}
-
-	& > a {
+	/* & > a {
 		margin: 1.5em 0;
 		color: #252437;
 		cursor: pointer;
-	}
+	} */
 `;
