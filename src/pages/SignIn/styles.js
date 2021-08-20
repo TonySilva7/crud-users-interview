@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const WrapContainer = styled.div`
 	height: 100vh;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	/* background-color: var(--charcoal-color); */
@@ -16,20 +17,70 @@ export const WrapContainer = styled.div`
 	);
 `;
 
-export const LoginWrap = styled.div`
-	background-color: #dfc2f290;
-	width: 400px;
+export const LoginArea = styled.header`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 25rem;
+	position: relative;
+	border-bottom: solid 1px #eee;
+
+	span {
+		display: flex;
+		border-radius: 1rem 1rem 0 0;
+		background-color: var(--charcoal-color);
+		height: 6rem;
+		width: inherit;
+	}
+
+	div {
+		position: absolute;
+		background-color: var(--white-color);
+		border-radius: 50%;
+		height: 7rem;
+		width: 7rem;
+
+		top: -3.5rem;
+
+		svg {
+			/* padding: 20px; */
+			/* height: 110px; */
+			/* margin-top: -80px; */
+			font-size: 8rem;
+			margin-left: -0.5rem;
+			margin-top: -0.5rem;
+
+			path {
+				margin: 0;
+				fill: var(--purple-logo);
+
+				/* stroke: var(--pink-lavender); */
+				stroke-width: 0.5px;
+			}
+		}
+	}
+`;
+
+export const LoginWrap = styled.footer`
+	background-color: #dfc2f270;
+	width: 25rem;
+	height: 22rem;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	flex-direction: column;
-	border-radius: 17px;
+	border-radius: 0 0 1rem 1rem;
+	box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
 
 	& > form {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		justify-content: space-around;
 		margin-top: 1.5em;
-		width: 90%;
+		width: 70%;
+		height: 70%;
 	}
 
 	& > form > h1 {
@@ -41,6 +92,7 @@ export const LoginWrap = styled.div`
 	& > form > input {
 		margin-bottom: 15px;
 		height: 35px;
+		width: 100%;
 		border: 0;
 		border-radius: 4px;
 		padding: 10px;
@@ -51,6 +103,7 @@ export const LoginWrap = styled.div`
 
 	& > form > button {
 		height: 35px;
+		width: 70%;
 		border: 0;
 		border-radius: 4px;
 		/* background-color: #252437; */
@@ -63,17 +116,5 @@ export const LoginWrap = styled.div`
 		margin: 1.5em 0;
 		color: #252437;
 		cursor: pointer;
-	}
-`;
-
-export const LoginArea = styled.div`
-	display: flex;
-	justify-content: center;
-	background-color: var(--charcoal-color);
-	width: 100%;
-	border-radius: 15px 15px 0 0;
-	svg {
-		padding: 20px;
-		height: 110px;
 	}
 `;

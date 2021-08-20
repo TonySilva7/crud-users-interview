@@ -1,6 +1,6 @@
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from '../../assets/logo-dev-life.svg';
 import LoaderBalls from '../../components/LoaderBalls';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
@@ -20,13 +20,16 @@ export default function SignIn() {
 
 	return (
 		<WrapContainer>
-			<LoginWrap>
-				<LoginArea>
-					<Logo alt='Sistema Logo'></Logo>
-				</LoginArea>
+			<LoginArea>
+				<div>
+					<AccountCircleIcon color='primary' />
+				</div>
+				<span></span>
+			</LoginArea>
 
+			<LoginWrap>
 				<form onSubmit={handleSubmit}>
-					<h1>Entrar</h1>
+					{/* <h1>Entrar</h1> */}
 					<input
 						type='text'
 						placeholder='Email'
