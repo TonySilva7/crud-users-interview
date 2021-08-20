@@ -1,20 +1,29 @@
 import styled from 'styled-components';
 
 export const WrapContainer = styled.div`
-	height: 100%;
+	height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #1b1a28;
+	/* background-color: var(--charcoal-color); */
+	background: rgb(234, 234, 236);
+	background: radial-gradient(
+		circle,
+		rgba(234, 234, 236, 1) 0%,
+		rgba(190, 216, 226, 1) 21%,
+		rgba(107, 108, 163, 1) 69%,
+		rgba(52, 64, 85, 1) 100%
+	);
 `;
 
 export const LoginWrap = styled.div`
-	background-color: #eaeaec;
-	width: 600px;
+	background-color: #dfc2f290;
+	width: 400px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
+	border-radius: 17px;
 
 	& > form {
 		display: flex;
@@ -44,7 +53,8 @@ export const LoginWrap = styled.div`
 		height: 35px;
 		border: 0;
 		border-radius: 4px;
-		background-color: #252437;
+		/* background-color: #252437; */
+		background-color: var(--purple-logo);
 		color: #fff;
 		font-size: 1.2em;
 	}
@@ -59,10 +69,11 @@ export const LoginWrap = styled.div`
 export const LoginArea = styled.div`
 	display: flex;
 	justify-content: center;
-	background-color: #252437;
+	background-color: var(--charcoal-color);
 	width: 100%;
+	border-radius: 15px 15px 0 0;
 	svg {
 		padding: 20px;
-		height: 130px;
+		height: 110px;
 	}
 `;
