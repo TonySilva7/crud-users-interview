@@ -21,6 +21,7 @@ export const InputLogin = withStyles((theme) => ({
 	root: {
 		// width: 200,
 		marginTop: '1rem',
+		display: 'flex',
 
 		'& .MuiInputBase-root': {
 			color: '#344055',

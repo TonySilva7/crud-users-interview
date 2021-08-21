@@ -3,9 +3,7 @@ import styled from 'styled-components';
 export const WrapContainer = styled.div`
 	min-height: 100vh;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+
 	background: rgb(234, 234, 236);
 	background: radial-gradient(
 		circle,
@@ -14,6 +12,14 @@ export const WrapContainer = styled.div`
 		rgba(107, 108, 163, 1) 69%,
 		rgba(52, 64, 85, 1) 100%
 	);
+
+	main {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		margin: 6rem auto;
+	}
 `;
 
 export const LoginArea = styled.header`
@@ -81,14 +87,8 @@ export const LoginWrap = styled.footer`
 			box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
 
 			background: rgb(107, 108, 163);
-			background: linear-gradient(2deg, #bcb3cf 34%, #dfc2f259 100%);
+			background: linear-gradient(2deg, #bcb3cf 34%, #dfc2f260 100%);
 			z-index: 1;
-
-			div {
-				svg {
-					fill: var(--purple-logo);
-				}
-			}
 		}
 	}
 `;
