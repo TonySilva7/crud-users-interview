@@ -20,6 +20,8 @@ import TextField from '@material-ui/core/TextField';
 export const InputLogin = withStyles((theme) => ({
 	root: {
 		// width: 200,
+		marginTop: '1rem',
+
 		'& .MuiInputBase-root': {
 			color: '#344055',
 			fontSize: '1.2rem',
@@ -56,8 +58,7 @@ export const ButtonLogin = withStyles({
 	root: {
 		height: '4rem',
 		width: '15rem',
-		marginTop: '-0.5rem',
-		border: '0',
+		// marginTop: '-0.5rem',
 		borderRadius: '0 0 1rem 1rem',
 
 		padding: '6px 12px',

@@ -9,7 +9,7 @@ export default function AllRoutes() {
 		<Switch>
 			<MyRoute exact path='/' component={SignIn} />
 			<MyRoute exact path='/register' component={SignUp} />
-			<MyRoute exact path='/dashboard' component={Dashboard} isPrivate />
+			<MyRoute exact path='/dashboard' component={Dashboard} /*isPrivate*/ />
 		</Switch>
 	);
 }
