@@ -146,7 +146,19 @@ export default function SignIn() {
 			<main>
 				<LoginArea>
 					<div>
-						<AccountCircleIcon color='primary' />
+						<AccountCircleIcon
+							style={{
+								fill: `${
+									name === '' && email === '' && password === ''
+										? '#7a75bc'
+										: !isChecked && emailItsOk && passwordItsOk
+										? '#7a75bc'
+										: isChecked && nameItsOk && emailItsOk && passwordItsOk
+										? '#7a75bc'
+										: '#e0665d'
+								}`,
+							}}
+						/>
 					</div>
 					<span></span>
 				</LoginArea>

@@ -95,16 +95,25 @@ export const WrapAside = styled.aside`
 			font-weight: bold;
 			color: var(--charcoal-color);
 			margin-top: 1rem;
+			transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
 
 			& > svg {
-				transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
 				fill: #b54e4e;
+				transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+				& > path {
+					transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+				}
 			}
 
 			&:hover {
+				background-color: #eaeaec30;
+				border-radius: 50px;
 				& > svg {
-					transform: translateX(0.7rem);
-					opacity: 0.4;
+					border-right: solid 0.1rem var(--charcoal-color);
+					& > path {
+						transform: translateX(0.9rem);
+						opacity: 0.4;
+					}
 				}
 			}
 		}
@@ -132,7 +141,8 @@ export const WrapArticle = styled.article`
 		box-shadow: var(--my-shadow);
 		box-sizing: border-box;
 		border: solid 1px #eaeaec90;
-		background: linear-gradient(7deg, #eaeaec 23%, #bbe9f970 100%);
+		/* background: linear-gradient(7deg, #eaeaec 23%, #bbe9f970 100%); */
+		background: var(--white-color);
 
 		transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);
 		transform: translateY(${(props) => `-${props.margin}rem`});

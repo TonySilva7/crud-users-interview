@@ -45,6 +45,7 @@ export const LoginArea = styled.header`
 		border-radius: 50%;
 		height: 7rem;
 		width: 7rem;
+		transform: scale(0.9);
 
 		top: -3.5rem;
 
@@ -55,7 +56,7 @@ export const LoginArea = styled.header`
 
 			path {
 				margin: 0;
-				fill: var(--purple-logo);
+				/* fill: var(--purple-logo); */
 				stroke-width: 0.5px;
 			}
 		}
