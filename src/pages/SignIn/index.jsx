@@ -11,7 +11,7 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import LoaderBalls from '../../components/LoaderBalls';
-import { ButtonSign, InputLogin } from './customMUI';
+import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {

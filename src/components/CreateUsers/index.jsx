@@ -2,16 +2,18 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { default as AccountCircle } from '@material-ui/icons/AccountCircle';
+import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
+import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import LoaderBalls from '../../components/LoaderBalls';
-import { ButtonSign, InputLogin } from '../../pages/SignIn/customMUI';
-import { LoginWrap } from '../../pages/SignIn/styles';
+import { ButtonSign, InputLogin } from '../../styles/customMUI';
+import { WrapCreateUsers, WrapUsersForm } from './styles';
 
-export default function CreateUsers(params) {
+export default function CreateUsers(props) {
 	const [name, setName] = useState('');
 	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
@@ -19,8 +21,6 @@ export default function CreateUsers(params) {
 
 	const [isChecked, setIsChecked] = useState(false);
 	const [loadingAuth, setLoadingAuth] = useState(false);
-
-	const [hideInputRegister, setHideInputRegister] = useState('none');
 
 	const history = useHistory();
 
@@ -133,155 +133,139 @@ export default function CreateUsers(params) {
 		setEmail('');
 		setPassword('');
 
-		setHideInputRegister(check ? 'flex' : 'none');
 		setIsChecked((prev) => (prev = check));
 	}
 	return (
-		<LoginWrap>
-			<form onSubmit={handleSubmit}>
-				<div>
-					<InputLogin
-						id='name'
-						fullWidth
-						label='Nome *'
-						variant='outlined'
-						type='text'
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<AccountCircle
-										style={{
-											fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
-										}}
-									/>
-								</InputAdornment>
-							),
-						}}
-						value={name}
-						style={{ display: `${hideInputRegister}` }}
-						onChange={(e) => handleChangeName(e.target.value)}
-					/>
+		<WrapCreateUsers display={props.display}>
+			<header>
+				<SupervisedUserCircleRoundedIcon style={{ fontSize: '4rem', color: '#d9d9e4' }} />
+				<button onClick={props.handleModal}>
+					<CancelRoundedIcon />
+				</button>
+			</header>
+			<WrapUsersForm>
+				<form onSubmit={handleSubmit}>
+					<div>
+						<InputLogin
+							id='name'
+							fullWidth
+							label='Nome *'
+							variant='outlined'
+							type='text'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>
+										<AccountCircle
+											style={{
+												fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
+											}}
+										/>
+									</InputAdornment>
+								),
+							}}
+							value={name}
+							onChange={(e) => handleChangeName(e.target.value)}
+						/>
 
-					<InputLogin
-						id='username'
-						fullWidth
-						label='Usuário *'
-						variant='outlined'
-						type='text'
-						disabled
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<PersonRoundedIcon
-										style={{
-											fill: `${userName === '' ? '#9390bd' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
-										}}
-									/>
-								</InputAdornment>
-							),
-						}}
-						value={userName}
+						<InputLogin
+							id='username'
+							fullWidth
+							label='Usuário *'
+							variant='outlined'
+							type='text'
+							disabled
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>
+										<PersonRoundedIcon
+											style={{
+												fill: `${userName === '' ? '#9390bd' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
+											}}
+										/>
+									</InputAdornment>
+								),
+							}}
+							value={userName}
+							onChange={(e) => handleChangeName(e.target.value)}
+						/>
+
+						<InputLogin
+							id='email'
+							fullWidth
+							label='Email *'
+							variant='outlined'
+							type='text'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>
+										<EmailRoundedIcon
+											style={{
+												fill: `${email === '' ? '#7a75bc' : emailItsOk ? '#7a75bc' : '#e0665d'}`,
+											}}
+										/>
+									</InputAdornment>
+								),
+							}}
+							value={email}
+							onChange={(e) => handleChangeMail(e.target.value)}
+						/>
+
+						<InputLogin
+							id='password'
+							label='Senha *'
+							value={password}
+							fullWidth
+							variant='outlined'
+							type='password'
+							autoComplete='current-password'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>
+										<LockRoundedIcon
+											style={{
+												fill: `${
+													password === '' ? '#7a75bc' : passwordItsOk ? '#7a75bc' : '#e0665d'
+												}`,
+											}}
+										/>
+									</InputAdornment>
+								),
+							}}
+							onChange={(e) => handleChangePassword(e.target.value)}
+						/>
+
+						<FormControlLabel
+							control={
+								<Checkbox
+									onChange={(e) => handleChangeCheck(e.target.checked)}
+									name='checkedA'
+									color='primary'
+								/>
+							}
+							label='Não tenho uma conta!'
+						/>
+					</div>
+
+					<ButtonSign
+						type='submit'
+						color='primary'
+						disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
 						style={{
-							display: `${hideInputRegister}`,
+							transform: `translateY(${
+								/*isChecked && */ name === '' && email === '' && password === ''
+									? '-0.4rem'
+									: /*isChecked && */ nameItsOk && emailItsOk && passwordItsOk
+									? '-0.4rem'
+									: '-3rem'
+							})`,
+							backgroundColor: '#7a75bc',
+							marginTop: '0rem',
 						}}
-						onChange={(e) => handleChangeName(e.target.value)}
-					/>
-
-					<InputLogin
-						id='email'
-						fullWidth
-						label='Email *'
-						variant='outlined'
-						type='text'
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<EmailRoundedIcon
-										style={{
-											fill: `${email === '' ? '#7a75bc' : emailItsOk ? '#7a75bc' : '#e0665d'}`,
-										}}
-									/>
-								</InputAdornment>
-							),
-						}}
-						value={email}
-						onChange={(e) => handleChangeMail(e.target.value)}
-					/>
-
-					<InputLogin
-						id='password'
-						label='Senha *'
-						value={password}
-						fullWidth
-						variant='outlined'
-						type='password'
-						autoComplete='current-password'
-						InputProps={{
-							startAdornment: (
-								<InputAdornment position='start'>
-									<LockRoundedIcon
-										style={{
-											fill: `${
-												password === '' ? '#7a75bc' : passwordItsOk ? '#7a75bc' : '#e0665d'
-											}`,
-										}}
-									/>
-								</InputAdornment>
-							),
-						}}
-						onChange={(e) => handleChangePassword(e.target.value)}
-					/>
-
-					<FormControlLabel
-						control={
-							<Checkbox
-								onChange={(e) => handleChangeCheck(e.target.checked)}
-								name='checkedA'
-								color='primary'
-							/>
-						}
-						label='Não tenho uma conta!'
-					/>
-				</div>
-
-				<ButtonSign
-					type='submit'
-					color='primary'
-					disabled={!(emailItsOk && passwordItsOk)}
-					style={{
-						// transform: `translateY(${hideButtonLogin}rem)`,
-						transform: `translateY(${
-							//!isChecked && email === '' && password === '' ? '0' :
-							!isChecked && email === '' && password === ''
-								? '0'
-								: !isChecked && emailItsOk && passwordItsOk
-								? '0'
-								: '-3'
-						}rem)`,
-						marginBottom: `-7rem`,
-					}}
-				>
-					{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Acessar'}
-				</ButtonSign>
-
-				<ButtonSign
-					type='submit'
-					color='primary'
-					disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
-					style={{
-						transform: `translateY(${
-							isChecked && name === '' && email === '' && password === ''
-								? '2.7rem'
-								: isChecked && nameItsOk && emailItsOk && passwordItsOk
-								? '2.7rem'
-								: '-1rem'
-						})`,
-						backgroundColor: '#344055',
-					}}
-				>
-					{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Registrar'}
-				</ButtonSign>
-			</form>
-		</LoginWrap>
+					>
+						{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Salvar'}
+					</ButtonSign>
+				</form>
+			</WrapUsersForm>
+		</WrapCreateUsers>
 	);
 }

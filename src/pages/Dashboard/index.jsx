@@ -3,20 +3,28 @@ import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
-import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
+import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import CreateUsers from '../../components/CreateUsers';
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
 	const [margin, setMargin] = useState(15);
+	const [display, setDisplay] = useState('none');
 
 	useEffect(() => {
 		setMargin(0);
 	}, []);
 
+	function handleModal() {
+		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
+	}
+
 	return (
 		<WrapMain>
+			<CreateUsers handleModal={handleModal} display={display} />
+
 			<WrapAside margin={margin}>
 				<header>
 					<picture>
@@ -35,14 +43,14 @@ export default function Dashboard() {
 			</WrapAside>
 			<WrapArticle margin={margin}>
 				<header>
-					<SupervisedUserCircleRoundedIcon />
+					<SettingsRoundedIcon />
 					<h1>Users</h1>
 				</header>
 				<WrapSection margin={margin}>
-					<Link>
+					<button onClick={handleModal}>
 						<PersonAddRoundedIcon />
 						<h2>Cadastrar</h2>
-					</Link>
+					</button>
 					<table>
 						<thead>
 							<tr>
@@ -63,7 +71,7 @@ export default function Dashboard() {
 								<td data-label='Email'>tony@mail.com</td>
 								<td data-label='Admin'>Sim</td>
 								<td data-label='#'>
-									<button onClick={() => {}}>
+									<button onClick={handleModal}>
 										<CreateRoundedIcon />
 									</button>
 									<button onClick={() => {}}>

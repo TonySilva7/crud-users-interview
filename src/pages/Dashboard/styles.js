@@ -149,7 +149,7 @@ export const WrapArticle = styled.article`
 
 		svg {
 			fill: var(--blue-primary);
-			font-size: 2.5rem;
+			font-size: 2rem;
 		}
 
 		h1 {
@@ -173,14 +173,14 @@ export const WrapSection = styled.section`
 	transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);
 	transform: translateX(${(props) => `${props.margin}rem`});
 
-	& > a {
+	& > button {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		transition: all 300ms cubic-bezier(0.18, 0.89, 0.32, 1.28);
 
-		padding: 1rem;
-		width: 10rem;
+		height: 3rem;
+		width: 8.5rem;
 		margin-bottom: 1.2rem;
 		border: solid 1px var(--white-color);
 		border-radius: 50px;
@@ -190,7 +190,6 @@ export const WrapSection = styled.section`
 		&:hover {
 			transform: scale(1.05);
 			& > svg {
-				fill: #adeac2;
 				transform: rotateY(180deg);
 			}
 		}
