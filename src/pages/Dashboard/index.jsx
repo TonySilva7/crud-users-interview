@@ -1,22 +1,48 @@
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import React from 'react';
+import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
+import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
+import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
+	const [margin, setMargin] = useState(15);
+
+	useEffect(() => {
+		setMargin(0);
+	}, []);
+
 	return (
 		<WrapMain>
-			<WrapAside>
+			<WrapAside margin={margin}>
 				<header>
 					<picture>
 						<AccountCircleRoundedIcon />
 					</picture>
 				</header>
-				<footer>lkjlskjdflksdjf</footer>
+				<footer>
+					<div>
+						<p>Bem vindo, </p>
+						<h3>Tony</h3>
+					</div>
+					<Link to='/'>
+						Sair <ExitToAppRoundedIcon />
+					</Link>
+				</footer>
 			</WrapAside>
-			<WrapArticle>
-				<header>Dashboard</header>
-				<WrapSection>
+			<WrapArticle margin={margin}>
+				<header>
+					<SupervisedUserCircleRoundedIcon />
+					<h1>Users</h1>
+				</header>
+				<WrapSection margin={margin}>
+					<Link>
+						<PersonAddRoundedIcon />
+						<h2>Cadastrar</h2>
+					</Link>
 					<table>
 						<thead>
 							<tr>
@@ -37,11 +63,15 @@ export default function Dashboard() {
 								<td data-label='Email'>tony@mail.com</td>
 								<td data-label='Admin'>Sim</td>
 								<td data-label='#'>
-									<button onClick={() => {}}>Icon</button>
-									<button onClick={() => {}}>Icon</button>
-									<Link to={`/dashboard`} style={{}}>
+									<button onClick={() => {}}>
+										<CreateRoundedIcon />
+									</button>
+									<button onClick={() => {}}>
+										<HighlightOffRoundedIcon />
+									</button>
+									{/* <Link to={`/dashboard`} style={{}}>
 										Icon
-									</Link>
+									</Link> */}
 								</td>
 							</tr>
 
@@ -52,11 +82,15 @@ export default function Dashboard() {
 								<td data-label='Email'>tony@mail.com</td>
 								<td data-label='Admin'>Sim</td>
 								<td data-label='#'>
-									<button onClick={() => {}}>Icon</button>
-									<button onClick={() => {}}>Icon</button>
-									<Link to={`/dashboard`} style={{}}>
+									<button onClick={() => {}}>
+										<CreateRoundedIcon />
+									</button>
+									<button onClick={() => {}}>
+										<HighlightOffRoundedIcon />
+									</button>
+									{/* <Link to={`/dashboard`} style={{}}>
 										Icon
-									</Link>
+									</Link> */}
 								</td>
 							</tr>
 
@@ -67,11 +101,15 @@ export default function Dashboard() {
 								<td data-label='Email'>tony@mail.com</td>
 								<td data-label='Admin'>Sim</td>
 								<td data-label='#'>
-									<button onClick={() => {}}>Icon</button>
-									<button onClick={() => {}}>Icon</button>
-									<Link to={`/dashboard`} style={{}}>
+									<button onClick={() => {}}>
+										<CreateRoundedIcon />
+									</button>
+									<button onClick={() => {}}>
+										<HighlightOffRoundedIcon />
+									</button>
+									{/* <Link to={`/dashboard`} style={{}}>
 										Icon
-									</Link>
+									</Link> */}
 								</td>
 							</tr>
 
@@ -82,26 +120,15 @@ export default function Dashboard() {
 								<td data-label='Email'>tony@mail.com</td>
 								<td data-label='Admin'>Sim</td>
 								<td data-label='#'>
-									<button onClick={() => {}}>Icon</button>
-									<button onClick={() => {}}>Icon</button>
-									<Link to={`/dashboard`} style={{}}>
+									<button onClick={() => {}}>
+										<CreateRoundedIcon />
+									</button>
+									<button onClick={() => {}}>
+										<HighlightOffRoundedIcon />
+									</button>
+									{/* <Link to={`/dashboard`} style={{}}>
 										Icon
-									</Link>
-								</td>
-							</tr>
-
-							<tr>
-								<td data-label='Id'>001</td>
-								<td data-label='Nome'>Tony Silva</td>
-								<td data-label='UserName'>tony-silva</td>
-								<td data-label='Email'>tony@mail.com</td>
-								<td data-label='Admin'>Sim</td>
-								<td data-label='#'>
-									<button onClick={() => {}}>Icon</button>
-									<button onClick={() => {}}>Icon</button>
-									<Link to={`/dashboard`} style={{}}>
-										Icon
-									</Link>
+									</Link> */}
 								</td>
 							</tr>
 						</tbody>

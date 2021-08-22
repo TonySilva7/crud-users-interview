@@ -31,7 +31,7 @@ export default function SignIn() {
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
 	const rgxMail =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8}$/g;
+	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8,}$/g;
 
 	const validName = name.match(rgxName) && name !== '' && name.length >= 3;
 	const validEmail = email !== '' && email.match(rgxMail);

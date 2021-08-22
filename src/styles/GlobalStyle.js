@@ -20,9 +20,9 @@ export const GlobalStyle = createGlobalStyle`
     --pink-thistle: #dfc2f2;
     --purple-logo: #7a75bc;
     --rhythm-color: #888098;
-    --blue-primary: #266dd3;
+    --blue-primary: #5288d6;
     --charcoal-color: #344055;
-    --my-shadow: 1px 4px 9px -6px rgba(37, 36, 55, 0.21);
+    --my-shadow: 1px 4px 9px -6px rgba(37, 36, 55, 0.4);
     /*--my-anime: load-balls 1s cubic-bezier(.19, .57, .3, .98) infinite alternate;*/
     --my-anime: load-balls 1.9s ease infinite;
   }
