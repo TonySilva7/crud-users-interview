@@ -8,14 +8,16 @@ import {
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AppCopy from '../../App-copy';
 import LoaderBalls from '../../components/LoaderBalls';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {
 	// const { signIn, loadingAuth } = useContext(AuthContext);
+	const history = useHistory();
 	const [name, setName] = useState('');
 	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
@@ -25,8 +27,6 @@ export default function SignIn() {
 	const [loadingAuth, setLoadingAuth] = useState(false);
 
 	const [hideInputRegister, setHideInputRegister] = useState('none');
-
-	const history = useHistory();
 
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
 	const rgxMail =
@@ -40,6 +40,14 @@ export default function SignIn() {
 	const [nameItsOk, setNameItsOk] = useState(false);
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
+
+	const [scaleLogo, setScaleLogo] = useState(5);
+	const [scaleForm, setScaleForm] = useState(0);
+
+	useEffect(() => {
+		setScaleLogo(1);
+		setScaleForm(1);
+	}, []);
 
 	//LOGIN
 	function handleLogin() {
@@ -145,7 +153,7 @@ export default function SignIn() {
 		<WrapContainer>
 			<main>
 				<LoginArea>
-					<div>
+					<div style={{ transform: `scale(${scaleLogo})`, transition: 'all 400ms ease' }}>
 						<AccountCircleIcon
 							style={{
 								fill: `${
@@ -163,7 +171,11 @@ export default function SignIn() {
 					<span></span>
 				</LoginArea>
 
-				<LoginWrap>
+				<LoginWrap
+					style={{
+						transform: `scale(${scaleForm})`,
+					}}
+				>
 					<form onSubmit={handleSubmit}>
 						<div>
 							<InputLogin
@@ -312,6 +324,8 @@ export default function SignIn() {
 					</form>
 				</LoginWrap>
 			</main>
+
+			<AppCopy />
 		</WrapContainer>
 	);
 }
