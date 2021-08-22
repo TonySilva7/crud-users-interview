@@ -11,7 +11,7 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import LoaderBalls from '../../components/LoaderBalls';
-import { ButtonLogin, InputLogin } from './customMUI';
+import { ButtonSign, InputLogin } from './customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {
@@ -24,10 +24,6 @@ export default function SignIn() {
 	const [isChecked, setIsChecked] = useState(false);
 	const [loadingAuth, setLoadingAuth] = useState(false);
 
-	const [nameItsOk, setNameItsOk] = useState(true);
-	const [emailItsOk, setEmailItsOk] = useState(true);
-	const [passwordItsOk, setPasswordItsOk] = useState(true);
-
 	const [hideInputRegister, setHideInputRegister] = useState('none');
 
 	const history = useHistory();
@@ -35,60 +31,38 @@ export default function SignIn() {
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
 	const rgxMail =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	const rgxPassword =
-		/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8,}$/g;
+	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8}$/g;
 
 	const validName = name.match(rgxName) && name !== '' && name.length >= 3;
 	const validEmail = email !== '' && email.match(rgxMail);
 	const validPass = password !== '' && password.match(rgxPassword);
 
+	const [nameItsOk, setNameItsOk] = useState(false);
+	const [emailItsOk, setEmailItsOk] = useState(false);
+	const [passwordItsOk, setPasswordItsOk] = useState(false);
+
 	//LOGIN
-	function handleLogin(event) {
+	function handleLogin() {
 		alert('Fazendo login...');
-		if (validEmail) {
-			setEmailItsOk(true);
-			if (validPass) {
-				setPasswordItsOk(true);
-				history.push('/dashboard');
-				// Chamar a função que validará senha e email com o servidor
-				// signIn(email, password);
-			} else {
-				setPasswordItsOk(false);
-				alert('Sua senha precisa ter mais de 8 dígitos');
-				return;
-			}
+
+		if (emailItsOk && passwordItsOk) {
+			// Chamar a função que validará senha e email com o servidor
+			// signIn(email, password);
+			history.push('/dashboard');
 		} else {
-			setEmailItsOk(false);
 			alert('Email Inválido');
 			return;
 		}
 	}
 
 	// Faz Cadastro
-	function handleRegister(event) {
+	function handleRegister() {
 		alert('Criando usuário...');
-		if (validName) {
-			// setNameItsOk(true);
-		} else {
-			// setNameItsOk(false);
-		}
 
-		if (email !== '' && validEmail) {
-			setEmailItsOk(true);
-			if (password !== '' && validPass) {
-				setPasswordItsOk(true);
-				history.push('/dashboard');
-				// Chamar a função que validará senha e email com o servidor
-				// signIn(email, password);
-			} else {
-				setPasswordItsOk(false);
-				alert('Sua senha precisa ter mais de 8 dígitos');
-				return;
-			}
-		} else {
-			setEmailItsOk(false);
-			alert('Email Inválido');
-			return;
+		if (nameItsOk && emailItsOk && passwordItsOk && userName !== '') {
+			// Chamar a função que validará senha e email com o servidor
+			// signIn(email, password);
+			history.push('/');
 		}
 	}
 
@@ -138,9 +112,7 @@ export default function SignIn() {
 		let fullName = String(name).toLowerCase().split(' ');
 		let nickName = `${fullName[0]}-${fullName[fullName.length - 1]}`;
 
-		let normalizeUserName = nickName
-			.normalize('NFKD')
-			.replace(/[^a-zA-Z\-\s]/g, '');
+		let normalizeUserName = nickName.normalize('NFKD').replace(/[^a-zA-Z\-\s]/g, '');
 
 		setUserName(normalizeUserName);
 	}
@@ -164,10 +136,6 @@ export default function SignIn() {
 		setUserName('');
 		setEmail('');
 		setPassword('');
-
-		setNameItsOk(true);
-		setEmailItsOk(true);
-		setPasswordItsOk(true);
 
 		setHideInputRegister(check ? 'flex' : 'none');
 		setIsChecked((prev) => (prev = check));
@@ -196,7 +164,9 @@ export default function SignIn() {
 									startAdornment: (
 										<InputAdornment position='start'>
 											<AccountCircle
-												style={{ fill: `${nameItsOk ? '#7a75bc' : '#e0665d'}` }}
+												style={{
+													fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
+												}}
 											/>
 										</InputAdornment>
 									),
@@ -218,7 +188,9 @@ export default function SignIn() {
 										<InputAdornment position='start'>
 											<PersonRoundedIcon
 												style={{
-													fill: `${nameItsOk ? '#7a75bc' : '#e0665d'}`,
+													fill: `${
+														userName === '' ? '#9390bd' : nameItsOk ? '#7a75bc' : '#e0665d'
+													}`,
 												}}
 											/>
 										</InputAdornment>
@@ -242,7 +214,7 @@ export default function SignIn() {
 										<InputAdornment position='start'>
 											<EmailRoundedIcon
 												style={{
-													fill: `${emailItsOk ? '#7a75bc' : '#e0665d'}`,
+													fill: `${email === '' ? '#7a75bc' : emailItsOk ? '#7a75bc' : '#e0665d'}`,
 												}}
 											/>
 										</InputAdornment>
@@ -265,7 +237,9 @@ export default function SignIn() {
 										<InputAdornment position='start'>
 											<LockRoundedIcon
 												style={{
-													fill: `${passwordItsOk ? '#7a75bc' : '#e0665d'}`,
+													fill: `${
+														password === '' ? '#7a75bc' : passwordItsOk ? '#7a75bc' : '#e0665d'
+													}`,
 												}}
 											/>
 										</InputAdornment>
@@ -286,44 +260,43 @@ export default function SignIn() {
 							/>
 						</div>
 
-						<ButtonLogin
+						<ButtonSign
 							type='submit'
 							color='primary'
 							disabled={!(emailItsOk && passwordItsOk)}
 							style={{
 								// transform: `translateY(${hideButtonLogin}rem)`,
 								transform: `translateY(${
-									!isChecked && emailItsOk && passwordItsOk ? '0' : '-3'
+									//!isChecked && email === '' && password === '' ? '0' :
+									!isChecked && email === '' && password === ''
+										? '0'
+										: !isChecked && emailItsOk && passwordItsOk
+										? '0'
+										: '-3'
 								}rem)`,
 								marginBottom: `-7rem`,
 							}}
 						>
-							{loadingAuth ? (
-								<LoaderBalls size={20} fill='#eaeaec' />
-							) : (
-								'Acessar'
-							)}
-						</ButtonLogin>
+							{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Acessar'}
+						</ButtonSign>
 
-						<ButtonLogin
+						<ButtonSign
 							type='submit'
 							color='primary'
 							disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
 							style={{
 								transform: `translateY(${
-									isChecked && nameItsOk && emailItsOk && passwordItsOk
-										? '2.7'
-										: '-1'
-								}rem)`,
+									isChecked && name === '' && email === '' && password === ''
+										? '2.7rem'
+										: isChecked && nameItsOk && emailItsOk && passwordItsOk
+										? '2.7rem'
+										: '-1rem'
+								})`,
 								backgroundColor: '#344055',
 							}}
 						>
-							{loadingAuth ? (
-								<LoaderBalls size={20} fill='#eaeaec' />
-							) : (
-								'Registrar'
-							)}
-						</ButtonLogin>
+							{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Registrar'}
+						</ButtonSign>
 					</form>
 				</LoginWrap>
 			</main>

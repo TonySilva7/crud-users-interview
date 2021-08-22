@@ -6,11 +6,9 @@ import TextField from '@material-ui/core/TextField';
 // const myTheme = createTheme({
 // 	palette: {
 // 		primary: {
-// 			// Purple and green play nicely together.
 // 			main: '#eee6',
 // 		},
 // 		secondary: {
-// 			// This is green.A700 as hex.
 // 			main: '#11cb5f',
 // 		},
 // 	},
@@ -55,7 +53,7 @@ export const InputLogin = withStyles((theme) => ({
 }))(TextField);
 
 // BUTTONS
-export const ButtonLogin = withStyles({
+export const ButtonSign = withStyles({
 	root: {
 		height: '4rem',
 		width: '15rem',

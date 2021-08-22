@@ -86,7 +86,6 @@ export const LoginWrap = styled.footer`
 			border-radius: 0 0 1rem 1rem;
 			box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
 
-			background: rgb(107, 108, 163);
 			background: linear-gradient(2deg, #bcb3cf 34%, #dfc2f260 100%);
 			z-index: 1;
 		}
