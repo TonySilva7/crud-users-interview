@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import increment, { decrement, incrementAsync } from './actions';
 // import './App.css';
 import Counter from './Counter';
+import increment, { decrement, incrementAsync } from './store/modules/userReducer/actions';
 // import logo from './logo.svg';
 
 export default function AppCopy() {

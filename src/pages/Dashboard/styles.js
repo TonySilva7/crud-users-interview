@@ -215,16 +215,17 @@ export const WrapSection = styled.section`
 		width: 100%;
 		table-layout: fixed;
 		color: var(--charcoal-color);
-		/* background-color: red; */
+		background-color: var(--white-color);
 		box-shadow: var(--my-shadow);
 
 		thead {
 			border-bottom: solid 2px var(--white-color);
-			/* background: linear-gradient(7deg, #eaeaec 23%, #bbe9f970 100%); */
 			background-color: var(--purple-logo);
-			/* color: var(--charcoal-color); */
 			color: var(--white-color);
-			height: 3rem;
+
+			& > tr {
+				height: 3rem;
+			}
 
 			th {
 				font-size: 0.85em;
@@ -258,26 +259,29 @@ export const WrapSection = styled.section`
 					text-align: center;
 
 					button {
-						border: 0;
+						border: solid 1px #fff;
 						padding: 5px;
 						margin-right: 5px;
 						align-items: center;
 						display: inline-block;
-						border-radius: 4px;
+						border-radius: 100%;
 						vertical-align: middle;
-						box-shadow: var(--my-shadow);
+						/* box-shadow: var(--my-shadow); */
+						box-shadow: -2px 7px 9px -6px rgba(37, 36, 55, 0.4) inset;
 
 						svg {
 							transition: all 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
 						}
 
 						&:nth-child(1) {
+							background-color: var(--white-color);
 							& > svg {
 								fill: var(--blue-primary);
 							}
 						}
 
 						&:nth-child(2) {
+							background-color: var(--white-color);
 							& > svg {
 								fill: #e87e76;
 							}
@@ -290,7 +294,8 @@ export const WrapSection = styled.section`
 						}
 						&:nth-child(2):hover {
 							& > svg {
-								transform: rotate(-90deg);
+								/* transform: rotate(-90deg); */
+								transform: scale(1.2);
 							}
 						}
 					}

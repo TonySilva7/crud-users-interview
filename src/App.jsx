@@ -1,14 +1,19 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 import AllRoutes from './routes';
+import myHistory from './services/history';
+import store from './store';
+import { GlobalStyle } from './styles/GlobalStyle';
 
 function App() {
 	return (
-		<div className='App'>
-			<BrowserRouter>
+		<Provider store={store}>
+			<Router history={myHistory}>
 				<AllRoutes />
-			</BrowserRouter>
-		</div>
+				<GlobalStyle />
+			</Router>
+		</Provider>
 	);
 }
 

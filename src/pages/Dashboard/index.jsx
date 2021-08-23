@@ -1,15 +1,26 @@
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
+// -----------------------------------------------------------------------
+import { useDispatch, useSelector } from 'react-redux';
+// -----------------------------------------------------------------------
 import { Link } from 'react-router-dom';
 import CreateUsers from '../../components/CreateUsers';
+// -----------------------------------------------------------------------
+import { actionAddUserRequest } from '../../store/modules/userReducer/actions';
+// -----------------------------------------------------------------------
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
+	// -----------------------------------------------------------------------
+	const myNumber = useSelector((state) => state.userReducer.value);
+	const dispatch = useDispatch();
+	// -----------------------------------------------------------------------
 	const [margin, setMargin] = useState(15);
 	const [display, setDisplay] = useState('none');
 
@@ -39,6 +50,10 @@ export default function Dashboard() {
 					<Link to='/'>
 						Sair <ExitToAppRoundedIcon />
 					</Link>
+					{/* -------------------------------------------------- */}
+					<h1>Count: {myNumber} </h1>
+					<button onClick={() => dispatch(actionAddUserRequest('oi'))}>Somar</button>
+					{/* -------------------------------------------------- */}
 				</footer>
 			</WrapAside>
 			<WrapArticle margin={margin}>
@@ -75,7 +90,7 @@ export default function Dashboard() {
 										<CreateRoundedIcon />
 									</button>
 									<button onClick={() => {}}>
-										<HighlightOffRoundedIcon />
+										<DeleteForeverRoundedIcon />
 									</button>
 									{/* <Link to={`/dashboard`} style={{}}>
 										Icon

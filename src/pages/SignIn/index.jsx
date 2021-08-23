@@ -10,7 +10,6 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import AppCopy from '../../App-copy';
 import LoaderBalls from '../../components/LoaderBalls';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
@@ -324,8 +323,6 @@ export default function SignIn() {
 					</form>
 				</LoginWrap>
 			</main>
-
-			<AppCopy />
 		</WrapContainer>
 	);
 }
