@@ -28,6 +28,10 @@ export default function Dashboard() {
 		setMargin(0);
 	}, []);
 
+	useEffect(() => {
+		//.... REQUISIÇÃO AQUI!!!!
+	}, []);
+
 	function handleModal() {
 		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
 	}

@@ -1,5 +1,24 @@
 import types from './types';
 
+// ........... LOGIN .........................
+export function actionLoginRequest(usr, pass) {
+	console.log('02. Action Request');
+	return {
+		type: types.LOGIN_REQUEST,
+		usr,
+		pass,
+	};
+}
+
+export function actionLoginSuccess(token) {
+	console.log('02. Action Request');
+	return {
+		type: types.LOGIN_SUCCESS,
+		token,
+	};
+}
+
+// ........... ADD USER .....................
 export function actionAddUserRequest(param) {
 	console.log('02. Action Request');
 	return {

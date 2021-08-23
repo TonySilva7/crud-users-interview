@@ -9,14 +9,17 @@ import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import LoaderBalls from '../../components/LoaderBalls';
+import history from '../../services/history';
+import { actionLoginRequest } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {
 	// const { signIn, loadingAuth } = useContext(AuthContext);
-	const history = useHistory();
+	const dispatch = useDispatch();
+
 	const [name, setName] = useState('');
 	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
@@ -28,15 +31,19 @@ export default function SignIn() {
 	const [hideInputRegister, setHideInputRegister] = useState('none');
 
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
+
+	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
 	const rgxMail =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8,}$/g;
 
 	const validName = name.match(rgxName) && name !== '' && name.length >= 3;
+	const validUserName = userName.match(rgxUserName) && userName !== '' && userName.length >= 3;
 	const validEmail = email !== '' && email.match(rgxMail);
 	const validPass = password !== '' && password.match(rgxPassword);
 
 	const [nameItsOk, setNameItsOk] = useState(false);
+	const [userNameItsOk, setUserNameItsOk] = useState(false);
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
 
@@ -50,12 +57,10 @@ export default function SignIn() {
 
 	//LOGIN
 	function handleLogin() {
-		alert('Fazendo login...');
+		if (userNameItsOk && passwordItsOk) {
+			dispatch(actionLoginRequest(userName, password));
 
-		if (emailItsOk && passwordItsOk) {
-			// Chamar a função que validará senha e email com o servidor
-			// signIn(email, password);
-			history.push('/dashboard');
+			// history.push('/dashboard');
 		} else {
 			alert('Email Inválido');
 			return;
@@ -66,7 +71,7 @@ export default function SignIn() {
 	function handleRegister() {
 		alert('Criando usuário...');
 
-		if (nameItsOk && emailItsOk && passwordItsOk && userName !== '') {
+		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
 			// Chamar a função que validará senha e email com o servidor
 			// signIn(email, password);
 			history.push('/');
@@ -92,6 +97,14 @@ export default function SignIn() {
 		}
 	}
 
+	function handleUserNameValidation() {
+		if (validUserName) {
+			setUserNameItsOk(true);
+		} else {
+			setUserNameItsOk(false);
+		}
+	}
+
 	function handleEmailValidation() {
 		if (validEmail) {
 			setEmailItsOk(true);
@@ -109,31 +122,26 @@ export default function SignIn() {
 	}
 
 	// Seta Name
-	function handleChangeName(value) {
-		setName(value);
+	function handleChangeName(name) {
+		setName(name);
 		handleNameValidation();
 	}
 
 	// Seta UserName
-	function handleUserName() {
-		let fullName = String(name).toLowerCase().split(' ');
-		let nickName = `${fullName[0]}-${fullName[fullName.length - 1]}`;
-
-		let normalizeUserName = nickName.normalize('NFKD').replace(/[^a-zA-Z\-\s]/g, '');
-
-		setUserName(normalizeUserName);
+	function handleUserName(userName) {
+		setUserName(userName);
+		handleUserNameValidation();
 	}
 
 	// Seta Email
-	function handleChangeMail(value) {
-		setEmail(value);
-		handleUserName(value);
+	function handleChangeMail(email) {
+		setEmail(email);
 		handleEmailValidation();
 	}
 
 	// Seta Senha
-	function handleChangePassword(value) {
-		setPassword(value);
+	function handleChangePassword(password) {
+		setPassword(password);
 		handlePasswordValidation();
 	}
 
@@ -156,11 +164,11 @@ export default function SignIn() {
 						<AccountCircleIcon
 							style={{
 								fill: `${
-									name === '' && email === '' && password === ''
+									name === '' && userName === '' && email === '' && password === ''
 										? '#7a75bc'
-										: !isChecked && emailItsOk && passwordItsOk
+										: !isChecked && userNameItsOk && passwordItsOk
 										? '#7a75bc'
-										: isChecked && nameItsOk && emailItsOk && passwordItsOk
+										: isChecked && nameItsOk && userNameItsOk && emailItsOk && passwordItsOk
 										? '#7a75bc'
 										: '#e0665d'
 								}`,
@@ -205,14 +213,14 @@ export default function SignIn() {
 								label='Usuário *'
 								variant='outlined'
 								type='text'
-								disabled
+								// disabled={isChecked}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position='start'>
 											<PersonRoundedIcon
 												style={{
 													fill: `${
-														userName === '' ? '#9390bd' : nameItsOk ? '#7a75bc' : '#e0665d'
+														userName === '' ? '#7a75bc' : userNameItsOk ? '#7a75bc' : '#e0665d'
 													}`,
 												}}
 											/>
@@ -220,10 +228,10 @@ export default function SignIn() {
 									),
 								}}
 								value={userName}
-								style={{
-									display: `${hideInputRegister}`,
-								}}
-								onChange={(e) => handleChangeName(e.target.value)}
+								// style={{
+								// 	display: `${hideInputRegister}`,
+								// }}
+								onChange={(e) => handleUserName(e.target.value)}
 							/>
 
 							<InputLogin
@@ -243,6 +251,7 @@ export default function SignIn() {
 										</InputAdornment>
 									),
 								}}
+								style={{ display: `${hideInputRegister}` }}
 								value={email}
 								onChange={(e) => handleChangeMail(e.target.value)}
 							/>
@@ -286,14 +295,12 @@ export default function SignIn() {
 						<ButtonSign
 							type='submit'
 							color='primary'
-							disabled={!(emailItsOk && passwordItsOk)}
+							disabled={!(userNameItsOk && passwordItsOk)}
 							style={{
-								// transform: `translateY(${hideButtonLogin}rem)`,
 								transform: `translateY(${
-									//!isChecked && email === '' && password === '' ? '0' :
 									!isChecked && email === '' && password === ''
 										? '0'
-										: !isChecked && emailItsOk && passwordItsOk
+										: !isChecked && userNameItsOk && passwordItsOk
 										? '0'
 										: '-3'
 								}rem)`,
@@ -306,12 +313,12 @@ export default function SignIn() {
 						<ButtonSign
 							type='submit'
 							color='primary'
-							disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
+							disabled={!(nameItsOk && userNameItsOk && emailItsOk && passwordItsOk)}
 							style={{
 								transform: `translateY(${
 									isChecked && name === '' && email === '' && password === ''
 										? '2.7rem'
-										: isChecked && nameItsOk && emailItsOk && passwordItsOk
+										: isChecked && nameItsOk && userNameItsOk && emailItsOk && passwordItsOk
 										? '2.7rem'
 										: '-1rem'
 								})`,
