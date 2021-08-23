@@ -1,12 +1,7 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../../../services/api';
 import history from '../../../../services/history';
-import {
-	actionAddDecrementSuccess,
-	actionAddUserSuccess,
-	actionLoginSuccess,
-	changeLoading,
-} from '../actions';
+import { actionAddUserSuccess, actionLoginSuccess, changeLoading } from '../actions';
 import types from '../actions/types';
 
 function* sagaLoginUser({ usr, pass }) {
@@ -41,6 +36,7 @@ function* sagaAddUser({ name, username, email, password }) {
 	console.log('03. SAGA - Add Request:', name, username, email, password);
 
 	try {
+		yield put(changeLoading(true));
 		const response = yield call(() =>
 			api.post('users', {
 				name,
@@ -52,23 +48,17 @@ function* sagaAddUser({ name, username, email, password }) {
 
 		const message = response.data.message;
 		yield put(actionAddUserSuccess(message));
-
+		yield put(changeLoading(false));
 		alert(message);
 	} catch (error) {
 		//LANÇAR ERRO AQUI
 		console.log(error);
+		yield put(changeLoading(false));
 		alert(`Erro: ${error}`);
 	}
-}
-
-function* sagaAddDecrement() {
-	console.log('03. Saga');
-
-	yield put(actionAddDecrementSuccess());
 }
 
 export default all([
 	takeLatest(types.LOGIN_REQUEST, sagaLoginUser),
 	takeLatest(types.ADD_USER_REQUEST, sagaAddUser),
-	takeLatest('ADD_DECREMENT_REQUEST', sagaAddDecrement),
 ]);

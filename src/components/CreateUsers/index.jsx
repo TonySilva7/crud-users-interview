@@ -6,6 +6,7 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import LoaderBalls from '../../components/LoaderBalls';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
@@ -17,7 +18,7 @@ export default function CreateUsers(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const [loadingAuth, setLoadingAuth] = useState(false);
+	const isLoading = useSelector((state) => state.userReducer.isLoading);
 
 	const history = useHistory();
 
@@ -247,7 +248,7 @@ export default function CreateUsers(props) {
 							marginTop: '0rem',
 						}}
 					>
-						{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Salvar'}
+						{isLoading ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Salvar'}
 					</ButtonSign>
 				</form>
 			</WrapUsersForm>

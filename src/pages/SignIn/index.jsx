@@ -81,6 +81,7 @@ export default function SignIn() {
 			setUserName('');
 			setEmail('');
 			setPassword('');
+			setIsChecked(false);
 		} else {
 			alert('Dados Incorretos');
 			return;
@@ -293,10 +294,10 @@ export default function SignIn() {
 						<ButtonSign
 							type='submit'
 							color='primary'
-							disabled={!(userNameItsOk && passwordItsOk)}
+							disabled={!(userNameItsOk && passwordItsOk && !isChecked)}
 							style={{
 								transform: `translateY(${
-									!isChecked && email === '' && password === ''
+									!isChecked && userName === '' && password === ''
 										? '0'
 										: !isChecked && userNameItsOk && passwordItsOk
 										? '0'
