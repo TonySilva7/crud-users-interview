@@ -9,16 +9,16 @@ import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoaderBalls from '../../components/LoaderBalls';
-import history from '../../services/history';
-import { actionLoginRequest } from '../../store/modules/userReducer/actions';
+import { actionAddUserRequest, actionLoginRequest } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {
 	// const { signIn, loadingAuth } = useContext(AuthContext);
 	const dispatch = useDispatch();
+	const isLoading = useSelector((state) => state.userReducer.isLoading);
 
 	const [name, setName] = useState('');
 	const [userName, setUserName] = useState('');
@@ -26,12 +26,10 @@ export default function SignIn() {
 	const [password, setPassword] = useState('');
 
 	const [isChecked, setIsChecked] = useState(false);
-	const [loadingAuth, setLoadingAuth] = useState(false);
 
 	const [hideInputRegister, setHideInputRegister] = useState('none');
 
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
-
 	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
 	const rgxMail =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,37 +53,37 @@ export default function SignIn() {
 		setScaleForm(1);
 	}, []);
 
+	// Main LOGIN/REGISTER
+	function handleSubmit(event) {
+		event.preventDefault();
+		if (isChecked) {
+			handleRegister(event);
+		} else {
+			handleLogin(event);
+		}
+	}
+
 	//LOGIN
 	function handleLogin() {
 		if (userNameItsOk && passwordItsOk) {
 			dispatch(actionLoginRequest(userName, password));
-
-			// history.push('/dashboard');
 		} else {
-			alert('Email Inválido');
+			alert('Dados Incorretos');
 			return;
 		}
 	}
 
 	// Faz Cadastro
-	function handleRegister() {
-		alert('Criando usuário...');
-
+	async function handleRegister() {
 		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
-			// Chamar a função que validará senha e email com o servidor
-			// signIn(email, password);
-			history.push('/');
-		}
-	}
-
-	// Main LOGIN/REGISTER
-	function handleSubmit(event) {
-		event.preventDefault();
-
-		if (isChecked) {
-			handleRegister(event);
+			await dispatch(actionAddUserRequest(name, userName, email, password));
+			setName('');
+			setUserName('');
+			setEmail('');
+			setPassword('');
 		} else {
-			handleLogin(event);
+			alert('Dados Incorretos');
+			return;
 		}
 	}
 
@@ -307,7 +305,7 @@ export default function SignIn() {
 								marginBottom: `-7rem`,
 							}}
 						>
-							{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Acessar'}
+							{isLoading ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Acessar'}
 						</ButtonSign>
 
 						<ButtonSign
@@ -325,7 +323,7 @@ export default function SignIn() {
 								backgroundColor: '#344055',
 							}}
 						>
-							{loadingAuth ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Registrar'}
+							{isLoading ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Registrar'}
 						</ButtonSign>
 					</form>
 				</LoginWrap>

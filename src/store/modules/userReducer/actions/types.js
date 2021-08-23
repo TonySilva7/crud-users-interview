@@ -10,6 +10,8 @@ const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 const FIND_USER_SUCCESS = 'DELETE_USER_SUCCESS';
 
+const CHANGE_LOADING = 'CHANGE_LOADING';
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
 	LOGIN_REQUEST,
@@ -23,4 +25,6 @@ export default {
 	UPDATE_USER_SUCCESS,
 	DELETE_USER_SUCCESS,
 	FIND_USER_SUCCESS,
+
+	CHANGE_LOADING,
 };

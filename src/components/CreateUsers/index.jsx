@@ -1,5 +1,3 @@
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { default as AccountCircle } from '@material-ui/icons/AccountCircle';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
@@ -19,21 +17,23 @@ export default function CreateUsers(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const [isChecked, setIsChecked] = useState(false);
 	const [loadingAuth, setLoadingAuth] = useState(false);
 
 	const history = useHistory();
 
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
+	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
 	const rgxMail =
 		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8,}$/g;
 
 	const validName = name.match(rgxName) && name !== '' && name.length >= 3;
+	const validUserName = userName.match(rgxUserName) && userName !== '' && userName.length >= 3;
 	const validEmail = email !== '' && email.match(rgxMail);
 	const validPass = password !== '' && password.match(rgxPassword);
 
 	const [nameItsOk, setNameItsOk] = useState(false);
+	const [userNameItsOk, setUserNameItsOk] = useState(false);
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
 
@@ -66,7 +66,8 @@ export default function CreateUsers(props) {
 	function handleSubmit(event) {
 		event.preventDefault();
 
-		if (isChecked) {
+		if (true) {
+			// <<<<<<<<<<<<<<<<<<< VALIDE SE É /POST OU /PUT
 			handleRegister(event);
 		} else {
 			handleLogin(event);
@@ -78,6 +79,14 @@ export default function CreateUsers(props) {
 			setNameItsOk(true);
 		} else {
 			setNameItsOk(false);
+		}
+	}
+
+	function handleUserNameValidation() {
+		if (validUserName) {
+			setUserNameItsOk(true);
+		} else {
+			setUserNameItsOk(false);
 		}
 	}
 
@@ -104,19 +113,14 @@ export default function CreateUsers(props) {
 	}
 
 	// Seta UserName
-	function handleUserName() {
-		let fullName = String(name).toLowerCase().split(' ');
-		let nickName = `${fullName[0]}-${fullName[fullName.length - 1]}`;
-
-		let normalizeUserName = nickName.normalize('NFKD').replace(/[^a-zA-Z\-\s]/g, '');
-
-		setUserName(normalizeUserName);
+	function handleUserName(userName) {
+		setUserName(userName);
+		handleUserNameValidation();
 	}
 
 	// Seta Email
 	function handleChangeMail(value) {
 		setEmail(value);
-		handleUserName(value);
 		handleEmailValidation();
 	}
 
@@ -126,15 +130,6 @@ export default function CreateUsers(props) {
 		handlePasswordValidation();
 	}
 
-	// Seta check do checkbox
-	function handleChangeCheck(check) {
-		setName('');
-		setUserName('');
-		setEmail('');
-		setPassword('');
-
-		setIsChecked((prev) => (prev = check));
-	}
 	return (
 		<WrapCreateUsers display={props.display}>
 			<header>
@@ -173,20 +168,21 @@ export default function CreateUsers(props) {
 							label='Usuário *'
 							variant='outlined'
 							type='text'
-							disabled
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
 										<PersonRoundedIcon
 											style={{
-												fill: `${userName === '' ? '#9390bd' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
+												fill: `${
+													userName === '' ? '#7a75bc' : userNameItsOk ? '#7a75bc' : '#e0665d'
+												}`,
 											}}
 										/>
 									</InputAdornment>
 								),
 							}}
 							value={userName}
-							onChange={(e) => handleChangeName(e.target.value)}
+							onChange={(e) => handleUserName(e.target.value)}
 						/>
 
 						<InputLogin
@@ -233,17 +229,6 @@ export default function CreateUsers(props) {
 							}}
 							onChange={(e) => handleChangePassword(e.target.value)}
 						/>
-
-						<FormControlLabel
-							control={
-								<Checkbox
-									onChange={(e) => handleChangeCheck(e.target.checked)}
-									name='checkedA'
-									color='primary'
-								/>
-							}
-							label='Não tenho uma conta!'
-						/>
 					</div>
 
 					<ButtonSign
@@ -252,9 +237,9 @@ export default function CreateUsers(props) {
 						disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
 						style={{
 							transform: `translateY(${
-								/*isChecked && */ name === '' && email === '' && password === ''
+								name === '' && userName === '' && email === '' && password === ''
 									? '-0.4rem'
-									: /*isChecked && */ nameItsOk && emailItsOk && passwordItsOk
+									: nameItsOk && userNameItsOk && emailItsOk && passwordItsOk
 									? '-0.4rem'
 									: '-3rem'
 							})`,

@@ -2,27 +2,26 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import CreateRoundedIcon from '@material-ui/icons/CreateRounded';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // -----------------------------------------------------------------------
 import { Link } from 'react-router-dom';
 import CreateUsers from '../../components/CreateUsers';
-// -----------------------------------------------------------------------
-import { actionAddUserRequest } from '../../store/modules/userReducer/actions';
+import api from '../../services/api';
 // -----------------------------------------------------------------------
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
 	// -----------------------------------------------------------------------
-	const myNumber = useSelector((state) => state.userReducer.value);
-	const dispatch = useDispatch();
+	const myToken = useSelector((state) => state.userReducer.token);
+	// const dispatch = useDispatch();
 	// -----------------------------------------------------------------------
 	const [margin, setMargin] = useState(15);
 	const [display, setDisplay] = useState('none');
+	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
 		setMargin(0);
@@ -30,11 +29,23 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		//.... REQUISIÇÃO AQUI!!!!
-	}, []);
+		async function getAllUsers() {
+			api.defaults.headers.token = myToken;
+
+			await api
+				.get('/users')
+				.then((response) => setUsers(response.data))
+				.catch((err) => alert(err));
+		}
+
+		getAllUsers();
+	}, [myToken]);
 
 	function handleModal() {
 		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
 	}
+
+	console.log(users); // <<<<<<<<<<<<<<<<<
 
 	return (
 		<WrapMain>
@@ -54,10 +65,6 @@ export default function Dashboard() {
 					<Link to='/'>
 						Sair <ExitToAppRoundedIcon />
 					</Link>
-					{/* -------------------------------------------------- */}
-					<h1>Count: {myNumber} </h1>
-					<button onClick={() => dispatch(actionAddUserRequest('oi'))}>Somar</button>
-					{/* -------------------------------------------------- */}
 				</footer>
 			</WrapAside>
 			<WrapArticle margin={margin}>
@@ -83,81 +90,26 @@ export default function Dashboard() {
 						</thead>
 
 						<tbody>
-							<tr>
-								<td data-label='Id'>001</td>
-								<td data-label='Nome'>Tony Silva</td>
-								<td data-label='UserName'>tony-silva</td>
-								<td data-label='Email'>tony@mail.com</td>
-								<td data-label='Admin'>Sim</td>
-								<td data-label='#'>
-									<button onClick={handleModal}>
-										<CreateRoundedIcon />
-									</button>
-									<button onClick={() => {}}>
-										<DeleteForeverRoundedIcon />
-									</button>
-									{/* <Link to={`/dashboard`} style={{}}>
+							{users.map((user) => (
+								<tr key={user._id}>
+									<td data-label='Id'>{user._id.substr(0, 4) + '...'}</td>
+									<td data-label='Nome'>{user.name}</td>
+									<td data-label='UserName'>{user.username}</td>
+									<td data-label='Email'>{user.email}</td>
+									<td data-label='Admin'>{user.admin ? 'Sim' : 'Não'}</td>
+									<td data-label='#'>
+										<button onClick={handleModal}>
+											<CreateRoundedIcon />
+										</button>
+										<button onClick={() => {}}>
+											<DeleteForeverRoundedIcon />
+										</button>
+										{/* <Link to={`/dashboard`} style={{}}>
 										Icon
 									</Link> */}
-								</td>
-							</tr>
-
-							<tr>
-								<td data-label='Id'>001</td>
-								<td data-label='Nome'>Tony Silva</td>
-								<td data-label='UserName'>tony-silva</td>
-								<td data-label='Email'>tony@mail.com</td>
-								<td data-label='Admin'>Sim</td>
-								<td data-label='#'>
-									<button onClick={() => {}}>
-										<CreateRoundedIcon />
-									</button>
-									<button onClick={() => {}}>
-										<HighlightOffRoundedIcon />
-									</button>
-									{/* <Link to={`/dashboard`} style={{}}>
-										Icon
-									</Link> */}
-								</td>
-							</tr>
-
-							<tr>
-								<td data-label='Id'>001</td>
-								<td data-label='Nome'>Tony Silva</td>
-								<td data-label='UserName'>tony-silva</td>
-								<td data-label='Email'>tony@mail.com</td>
-								<td data-label='Admin'>Sim</td>
-								<td data-label='#'>
-									<button onClick={() => {}}>
-										<CreateRoundedIcon />
-									</button>
-									<button onClick={() => {}}>
-										<HighlightOffRoundedIcon />
-									</button>
-									{/* <Link to={`/dashboard`} style={{}}>
-										Icon
-									</Link> */}
-								</td>
-							</tr>
-
-							<tr>
-								<td data-label='Id'>001</td>
-								<td data-label='Nome'>Tony Silva</td>
-								<td data-label='UserName'>tony-silva</td>
-								<td data-label='Email'>tony@mail.com</td>
-								<td data-label='Admin'>Sim</td>
-								<td data-label='#'>
-									<button onClick={() => {}}>
-										<CreateRoundedIcon />
-									</button>
-									<button onClick={() => {}}>
-										<HighlightOffRoundedIcon />
-									</button>
-									{/* <Link to={`/dashboard`} style={{}}>
-										Icon
-									</Link> */}
-								</td>
-							</tr>
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</table>
 				</WrapSection>
