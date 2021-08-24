@@ -9,7 +9,6 @@ export function changeLoading(bool) {
 
 // ........... LOGIN .........................
 export function actionLoginRequest(usr, pass) {
-	console.log('02. Action Request');
 	return {
 		type: types.LOGIN_REQUEST,
 		usr,
@@ -18,7 +17,6 @@ export function actionLoginRequest(usr, pass) {
 }
 
 export function actionLoginSuccess(token) {
-	console.log('02. Action Request');
 	return {
 		type: types.LOGIN_SUCCESS,
 		token,
@@ -37,9 +35,27 @@ export function actionAddUserRequest(name, username, email, password) {
 }
 
 export function actionAddUserSuccess(message) {
-	console.log('04. Action Success');
 	return {
 		type: types.ADD_USER_SUCCESS,
+		message,
+	};
+}
+
+// ........... UPDATE USER .....................
+export function actionUpdateUserRequest(id, name, username, email, password) {
+	return {
+		type: types.UPDATE_USER_REQUEST,
+		id,
+		name,
+		username,
+		email,
+		password,
+	};
+}
+
+export function actionUpdateUserSuccess(message) {
+	return {
+		type: types.UPDATE_USER_SUCCESS,
 		message,
 	};
 }

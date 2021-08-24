@@ -8,7 +8,10 @@ import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCi
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoaderBalls from '../../components/LoaderBalls';
-import { actionAddUserRequest } from '../../store/modules/userReducer/actions';
+import {
+	actionAddUserRequest,
+	actionUpdateUserRequest,
+} from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { WrapCreateUsers, WrapUsersForm } from './styles';
 
@@ -40,15 +43,17 @@ export default function CreateUsers(props) {
 	// Main CREATE/UPDATE
 	function handleSubmit(event) {
 		event.preventDefault();
-
-		if (props.action === '') {
+		if (props.dataButton === '') {
 			return;
-		}
-		if (props.action === 'create') {
-			handleCreateUser(event);
+		} else if (props.dataButton === 'create') {
+			handleCreateUser();
 			return;
 		} else {
-			handleUpdateUser(event);
+			// Busca usuário no BD e carrega os dados
+			// const response = async () => await api.get(`/users/${props.dataButton}`);
+			// const user = response.data;
+			handleUpdateUser(props.dataButton);
+			return;
 		}
 	}
 
@@ -67,11 +72,11 @@ export default function CreateUsers(props) {
 	}
 
 	// Faz Cadastro
-	function handleUpdateUser() {
+	function handleUpdateUser(id) {
 		alert('Atualizando usuário...');
 
 		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
-			dispatch(actionAddUserRequest(props.action, name, userName, email, password));
+			dispatch(actionUpdateUserRequest(id, name, userName, email, password));
 			setName('');
 			setUserName('');
 			setEmail('');
@@ -142,7 +147,7 @@ export default function CreateUsers(props) {
 		<WrapCreateUsers display={props.display}>
 			<header>
 				<SupervisedUserCircleRoundedIcon style={{ fontSize: '4rem', color: '#d9d9e4' }} />
-				<button onClick={props.handleModal}>
+				<button onClick={props.handleReqBtn}>
 					<CancelRoundedIcon />
 				</button>
 			</header>
@@ -222,6 +227,7 @@ export default function CreateUsers(props) {
 							variant='outlined'
 							type='password'
 							autoComplete='current-password'
+							style={{ display: `${props.title === 'Atualizar' ? 'none' : 'flex'}` }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -255,7 +261,7 @@ export default function CreateUsers(props) {
 							marginTop: '0rem',
 						}}
 					>
-						{isLoading ? <LoaderBalls size={20} fill='#eaeaec' /> : 'Salvar'}
+						{isLoading ? <LoaderBalls size={20} fill='#eaeaec' /> : `${props.title}`}
 					</ButtonSign>
 				</form>
 			</WrapUsersForm>

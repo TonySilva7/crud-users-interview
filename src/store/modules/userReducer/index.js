@@ -33,19 +33,17 @@ export default function myReducer(state = initialState, action) {
 				alert(draft.message);
 			});
 
-		case types.DELETE_USER_SUCCESS:
+		case types.UPDATE_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.message = action.message;
 				alert(draft.message);
 			});
 
-		// case 'ADD_DECREMENT_SUCCESS':
-		// 	console.log('05. Reducer: ', action);
-		// 	return produce(state, (draft) => {
-		// 		console.log('05. DRAFT: ', draft.value, draft.token);
-		// 		draft.token = action.token;
-		// 		draft.value = state.value - 1;
-		// 	});
+		case types.DELETE_USER_SUCCESS:
+			return produce(state, (draft) => {
+				draft.message = action.message;
+				alert(draft.message);
+			});
 
 		default:
 			return state;

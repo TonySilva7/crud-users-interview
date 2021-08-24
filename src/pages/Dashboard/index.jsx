@@ -23,7 +23,8 @@ export default function Dashboard() {
 	const [margin, setMargin] = useState(15);
 	const [display, setDisplay] = useState('none');
 	const [users, setUsers] = useState([]);
-	const [actionButton, setActionButton] = useState('');
+	const [dataButton, setDataButton] = useState('');
+	const isLoading = useSelector((state) => state.userReducer.isLoading);
 
 	useEffect(() => {
 		setMargin(0);
@@ -41,18 +42,21 @@ export default function Dashboard() {
 		}
 
 		getAllUsers();
-	}, [myToken]);
+	}, [myToken, isLoading]);
 
-	function handleModal(act) {
-		setActionButton(act);
+	function handleRequestButton(data) {
+		setDataButton(data);
 		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
 	}
 
-	console.log(users); // <<<<<<<<<<<<<<<<<
-
 	return (
 		<WrapMain>
-			<CreateUsers handleModal={handleModal} display={display} action={actionButton} />
+			<CreateUsers
+				handleReqBtn={handleRequestButton}
+				display={display}
+				dataButton={dataButton}
+				title={dataButton === 'create' ? 'Salvar' : 'Atualizar'}
+			/>
 
 			<WrapAside margin={margin}>
 				<header>
@@ -76,7 +80,7 @@ export default function Dashboard() {
 					<h1>Users</h1>
 				</header>
 				<WrapSection margin={margin}>
-					<button onClick={() => handleModal('create')}>
+					<button onClick={() => handleRequestButton('create')}>
 						<PersonAddRoundedIcon />
 						<h2>Cadastrar</h2>
 					</button>
@@ -103,7 +107,7 @@ export default function Dashboard() {
 									<td data-label='Email'>{user.email}</td>
 									<td data-label='Admin'>{user.admin ? 'Sim' : 'Não'}</td>
 									<td data-label='#'>
-										<button onClick={() => handleModal(user._id)}>
+										<button onClick={() => handleRequestButton(user._id)}>
 											<CreateRoundedIcon />
 										</button>
 										<button onClick={() => dispatch(actionDeleteUserRequest(user._id))}>
