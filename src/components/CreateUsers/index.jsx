@@ -5,9 +5,10 @@ import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoaderBalls from '../../components/LoaderBalls';
+import api from '../../services/api';
 import {
 	actionAddUserRequest,
 	actionUpdateUserRequest,
@@ -40,6 +41,32 @@ export default function CreateUsers(props) {
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
 
+	useEffect(() => {
+		async function getUserById(id) {
+			setName('');
+			setUserName('');
+			setEmail('');
+
+			if (id !== 'create' && id !== '') {
+				await api.get(`/users/${id}`).then((res) => {
+					setName(res.data.name);
+					setUserName(res.data.username);
+					setEmail(res.data.email);
+				});
+				return;
+			}
+		}
+
+		if (props.dataButton === 'create') {
+			setName('');
+			setUserName('');
+			setEmail('');
+			return;
+		}
+
+		getUserById(props.dataButton);
+	}, [props.dataButton]);
+
 	// Main CREATE/UPDATE
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -65,6 +92,7 @@ export default function CreateUsers(props) {
 			setUserName('');
 			setEmail('');
 			setPassword('');
+			props.handleDisplay();
 		} else {
 			alert('Dados Incorretos');
 			return;
@@ -75,12 +103,13 @@ export default function CreateUsers(props) {
 	function handleUpdateUser(id) {
 		alert('Atualizando usuário...');
 
-		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
+		if (nameItsOk && userNameItsOk && emailItsOk) {
 			dispatch(actionUpdateUserRequest(id, name, userName, email, password));
 			setName('');
 			setUserName('');
 			setEmail('');
-			setPassword('');
+			// setPassword('');
+			props.handleDisplay();
 		} else {
 			alert('Dados Incorretos');
 			return;
@@ -147,7 +176,7 @@ export default function CreateUsers(props) {
 		<WrapCreateUsers display={props.display}>
 			<header>
 				<SupervisedUserCircleRoundedIcon style={{ fontSize: '4rem', color: '#d9d9e4' }} />
-				<button onClick={props.handleReqBtn}>
+				<button onClick={props.handleDisplay}>
 					<CancelRoundedIcon />
 				</button>
 			</header>
@@ -248,12 +277,12 @@ export default function CreateUsers(props) {
 					<ButtonSign
 						type='submit'
 						color='primary'
-						disabled={!(nameItsOk && emailItsOk && passwordItsOk)}
+						disabled={!(nameItsOk && emailItsOk)}
 						style={{
 							transform: `translateY(${
-								name === '' && userName === '' && email === '' && password === ''
+								name === '' && userName === '' && email === ''
 									? '-0.4rem'
-									: nameItsOk && userNameItsOk && emailItsOk && passwordItsOk
+									: nameItsOk && userNameItsOk && emailItsOk
 									? '-0.4rem'
 									: '-3rem'
 							})`,

@@ -44,9 +44,13 @@ export default function Dashboard() {
 		getAllUsers();
 	}, [myToken, isLoading]);
 
+	function handleDisplay() {
+		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
+	}
+
 	function handleRequestButton(data) {
 		setDataButton(data);
-		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
+		handleDisplay();
 	}
 
 	return (
@@ -56,6 +60,7 @@ export default function Dashboard() {
 				display={display}
 				dataButton={dataButton}
 				title={dataButton === 'create' ? 'Salvar' : 'Atualizar'}
+				handleDisplay={handleDisplay}
 			/>
 
 			<WrapAside margin={margin}>
