@@ -52,6 +52,10 @@ export default function CreateUsers(props) {
 					setName(res.data.name);
 					setUserName(res.data.username);
 					setEmail(res.data.email);
+
+					setEmailItsOk(true);
+					setUserNameItsOk(true);
+					setNameItsOk(true);
 				});
 				return;
 			}

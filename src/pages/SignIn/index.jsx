@@ -26,8 +26,6 @@ export default function SignIn() {
 
 	const [isChecked, setIsChecked] = useState(false);
 
-	const [hideInputRegister, setHideInputRegister] = useState('none');
-
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
 	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
 	const rgxMail =
@@ -80,7 +78,10 @@ export default function SignIn() {
 			setUserName('');
 			setEmail('');
 			setPassword('');
+
 			setIsChecked(false);
+
+			// handleChangeCheck(false);
 		} else {
 			alert('Dados Incorretos');
 			return;
@@ -150,8 +151,7 @@ export default function SignIn() {
 		setEmail('');
 		setPassword('');
 
-		setHideInputRegister(check ? 'flex' : 'none');
-		setIsChecked((prev) => (prev = check));
+		setIsChecked(!isChecked);
 	}
 
 	return (
@@ -201,7 +201,7 @@ export default function SignIn() {
 									),
 								}}
 								value={name}
-								style={{ display: `${hideInputRegister}` }}
+								style={{ display: `${isChecked ? 'flex' : 'none'}` }}
 								onChange={(e) => handleChangeName(e.target.value)}
 							/>
 
@@ -226,9 +226,6 @@ export default function SignIn() {
 									),
 								}}
 								value={userName}
-								// style={{
-								// 	display: `${hideInputRegister}`,
-								// }}
 								onChange={(e) => handleUserName(e.target.value)}
 							/>
 
@@ -249,7 +246,7 @@ export default function SignIn() {
 										</InputAdornment>
 									),
 								}}
-								style={{ display: `${hideInputRegister}` }}
+								style={{ display: `${isChecked ? 'flex' : 'none'}` }}
 								value={email}
 								onChange={(e) => handleChangeMail(e.target.value)}
 							/>
@@ -281,8 +278,10 @@ export default function SignIn() {
 							<FormControlLabel
 								control={
 									<Checkbox
-										onChange={(e) => handleChangeCheck(e.target.checked)}
-										name='checkedA'
+										// onChange={(e) => handleChangeCheck(e.target.checked)}
+										onChange={(e) => handleChangeCheck(e)}
+										checked={isChecked}
+										id='checkRegister'
 										color='primary'
 									/>
 								}
