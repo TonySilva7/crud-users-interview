@@ -6,22 +6,24 @@ import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // -----------------------------------------------------------------------
 import { Link } from 'react-router-dom';
 import CreateUsers from '../../components/CreateUsers';
 import api from '../../services/api';
+import { actionDeleteUserRequest } from '../../store/modules/userReducer/actions';
 // -----------------------------------------------------------------------
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
 	// -----------------------------------------------------------------------
 	const myToken = useSelector((state) => state.userReducer.token);
-	// const dispatch = useDispatch();
+	const dispatch = useDispatch();
 	// -----------------------------------------------------------------------
 	const [margin, setMargin] = useState(15);
 	const [display, setDisplay] = useState('none');
 	const [users, setUsers] = useState([]);
+	const [actionButton, setActionButton] = useState('');
 
 	useEffect(() => {
 		setMargin(0);
@@ -41,7 +43,8 @@ export default function Dashboard() {
 		getAllUsers();
 	}, [myToken]);
 
-	function handleModal() {
+	function handleModal(act) {
+		setActionButton(act);
 		setDisplay((prev) => (prev === 'none' ? 'flex' : 'none'));
 	}
 
@@ -49,7 +52,7 @@ export default function Dashboard() {
 
 	return (
 		<WrapMain>
-			<CreateUsers handleModal={handleModal} display={display} />
+			<CreateUsers handleModal={handleModal} display={display} action={actionButton} />
 
 			<WrapAside margin={margin}>
 				<header>
@@ -73,7 +76,7 @@ export default function Dashboard() {
 					<h1>Users</h1>
 				</header>
 				<WrapSection margin={margin}>
-					<button onClick={handleModal}>
+					<button onClick={() => handleModal('create')}>
 						<PersonAddRoundedIcon />
 						<h2>Cadastrar</h2>
 					</button>
@@ -92,16 +95,18 @@ export default function Dashboard() {
 						<tbody>
 							{users.map((user) => (
 								<tr key={user._id}>
-									<td data-label='Id'>{user._id.substr(0, 4) + '...'}</td>
+									<td data-label='Id'>
+										{user._id.substr(0, 3) + '...' + user._id.substr(user._id.length - 3)}
+									</td>
 									<td data-label='Nome'>{user.name}</td>
 									<td data-label='UserName'>{user.username}</td>
 									<td data-label='Email'>{user.email}</td>
 									<td data-label='Admin'>{user.admin ? 'Sim' : 'Não'}</td>
 									<td data-label='#'>
-										<button onClick={handleModal}>
+										<button onClick={() => handleModal(user._id)}>
 											<CreateRoundedIcon />
 										</button>
-										<button onClick={() => {}}>
+										<button onClick={() => dispatch(actionDeleteUserRequest(user._id))}>
 											<DeleteForeverRoundedIcon />
 										</button>
 										{/* <Link to={`/dashboard`} style={{}}>

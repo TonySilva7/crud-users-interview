@@ -6,21 +6,20 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import LoaderBalls from '../../components/LoaderBalls';
+import { actionAddUserRequest } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { WrapCreateUsers, WrapUsersForm } from './styles';
 
 export default function CreateUsers(props) {
+	const dispatch = useDispatch();
+	const isLoading = useSelector((state) => state.userReducer.isLoading);
+
 	const [name, setName] = useState('');
 	const [userName, setUserName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
-	const isLoading = useSelector((state) => state.userReducer.isLoading);
-
-	const history = useHistory();
 
 	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
 	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
@@ -38,40 +37,48 @@ export default function CreateUsers(props) {
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
 
-	//LOGIN
-	function handleLogin() {
-		alert('Fazendo login...');
+	// Main CREATE/UPDATE
+	function handleSubmit(event) {
+		event.preventDefault();
 
-		if (emailItsOk && passwordItsOk) {
-			// Chamar a função que validará senha e email com o servidor
-			// signIn(email, password);
-			history.push('/dashboard');
+		if (props.action === '') {
+			return;
+		}
+		if (props.action === 'create') {
+			handleCreateUser(event);
+			return;
 		} else {
-			alert('Email Inválido');
+			handleUpdateUser(event);
+		}
+	}
+
+	//CREATE
+	function handleCreateUser() {
+		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
+			dispatch(actionAddUserRequest(name, userName, email, password));
+			setName('');
+			setUserName('');
+			setEmail('');
+			setPassword('');
+		} else {
+			alert('Dados Incorretos');
 			return;
 		}
 	}
 
 	// Faz Cadastro
-	function handleRegister() {
-		alert('Criando usuário...');
+	function handleUpdateUser() {
+		alert('Atualizando usuário...');
 
-		if (nameItsOk && emailItsOk && passwordItsOk && userName !== '') {
-			// Chamar a função que validará senha e email com o servidor
-			// signIn(email, password);
-			history.push('/');
-		}
-	}
-
-	// Main LOGIN/REGISTER
-	function handleSubmit(event) {
-		event.preventDefault();
-
-		if (true) {
-			// <<<<<<<<<<<<<<<<<<< VALIDE SE É /POST OU /PUT
-			handleRegister(event);
+		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
+			dispatch(actionAddUserRequest(props.action, name, userName, email, password));
+			setName('');
+			setUserName('');
+			setEmail('');
+			setPassword('');
 		} else {
-			handleLogin(event);
+			alert('Dados Incorretos');
+			return;
 		}
 	}
 

@@ -16,7 +16,6 @@ import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { LoginArea, LoginWrap, WrapContainer } from './styles';
 
 export default function SignIn() {
-	// const { signIn, loadingAuth } = useContext(AuthContext);
 	const dispatch = useDispatch();
 	const isLoading = useSelector((state) => state.userReducer.isLoading);
 
@@ -74,9 +73,9 @@ export default function SignIn() {
 	}
 
 	// Faz Cadastro
-	async function handleRegister() {
+	function handleRegister() {
 		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
-			await dispatch(actionAddUserRequest(name, userName, email, password));
+			dispatch(actionAddUserRequest(name, userName, email, password));
 			setName('');
 			setUserName('');
 			setEmail('');

@@ -1,13 +1,15 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../../../services/api';
 import history from '../../../../services/history';
-import { actionAddUserSuccess, actionLoginSuccess, changeLoading } from '../actions';
+import {
+	actionAddUserSuccess,
+	actionDeleteUserSuccess,
+	actionLoginSuccess,
+	changeLoading,
+} from '../actions';
 import types from '../actions/types';
 
 function* sagaLoginUser({ usr, pass }) {
-	console.log('03. Saga');
-	console.log('...Começou o acesso...');
-
 	try {
 		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		const response = yield call(() =>
@@ -22,19 +24,16 @@ function* sagaLoginUser({ usr, pass }) {
 		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		history.push('/dashboard');
 
-		console.log('...Terminou o acesso...');
 		alert(myToken);
 	} catch (error) {
 		//LANÇAR ERRO AQUI
-		console.log(error);
+
 		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		alert(`Erro: ${error}`);
 	}
 }
 
 function* sagaAddUser({ name, username, email, password }) {
-	console.log('03. SAGA - Add Request:', name, username, email, password);
-
 	try {
 		yield put(changeLoading(true));
 		const response = yield call(() =>
@@ -52,7 +51,24 @@ function* sagaAddUser({ name, username, email, password }) {
 		alert(message);
 	} catch (error) {
 		//LANÇAR ERRO AQUI
-		console.log(error);
+
+		yield put(changeLoading(false));
+		alert(`Erro: ${error}`);
+	}
+}
+
+function* sagaDeleteUser({ id }) {
+	try {
+		yield put(changeLoading(true));
+
+		const response = yield call(() => api.delete(`users/${id}`));
+
+		const message = response.data.message;
+		yield put(actionDeleteUserSuccess(message));
+		yield put(changeLoading(false));
+		alert(message);
+	} catch (error) {
+		//LANÇAR ERRO AQUI
 		yield put(changeLoading(false));
 		alert(`Erro: ${error}`);
 	}
@@ -61,4 +77,5 @@ function* sagaAddUser({ name, username, email, password }) {
 export default all([
 	takeLatest(types.LOGIN_REQUEST, sagaLoginUser),
 	takeLatest(types.ADD_USER_REQUEST, sagaAddUser),
+	takeLatest(types.DELETE_USER_REQUEST, sagaDeleteUser),
 ]);

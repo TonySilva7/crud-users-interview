@@ -44,18 +44,17 @@ export function actionAddUserSuccess(message) {
 	};
 }
 
-//------------------------------------------
-
-export function actionAddDecrementRequest() {
-	console.log('02. Action Request');
+// ........... DELETE USER .....................
+export function actionDeleteUserRequest(id) {
 	return {
-		type: 'ADD_DECREMENT_REQUEST',
+		type: types.DELETE_USER_REQUEST,
+		id,
 	};
 }
 
-export function actionAddDecrementSuccess() {
-	console.log('04. Action Success');
+export function actionDeleteUserSuccess(message) {
 	return {
-		type: 'ADD_DECREMENT_SUCCESS',
+		type: types.DELETE_USER_SUCCESS,
+		message,
 	};
 }
