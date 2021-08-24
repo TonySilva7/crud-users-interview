@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // -----------------------------------------------------------------------
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import CreateUsers from '../../components/CreateUsers';
 import api from '../../services/api';
 import { actionDeleteUserRequest } from '../../store/modules/userReducer/actions';
@@ -18,6 +19,7 @@ import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 export default function Dashboard() {
 	// -----------------------------------------------------------------------
 	const myToken = useSelector((state) => state.userReducer.token);
+	const username = useSelector((state) => state.userReducer.user.username);
 	const dispatch = useDispatch();
 	// -----------------------------------------------------------------------
 	const [margin, setMargin] = useState(15);
@@ -28,7 +30,10 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		setMargin(0);
-	}, []);
+		toast.success(`Seja Bem Vindo(a) ${username} 😊`, {
+			position: toast.POSITION.TOP_CENTER,
+		});
+	}, [username]);
 
 	useEffect(() => {
 		//.... REQUISIÇÃO AQUI!!!!
@@ -71,8 +76,8 @@ export default function Dashboard() {
 				</header>
 				<footer>
 					<div>
-						<p>Bem vindo, </p>
-						<h3>Tony</h3>
+						<p>Bem vindo(a), </p>
+						<h3>{username}</h3>
 					</div>
 					<Link to='/'>
 						Sair <ExitToAppRoundedIcon />

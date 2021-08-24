@@ -1,17 +1,9 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
-  /* :root {
-    --dark-color: #252437;
-    --dark-middle: #1b1a28;
-    --white-color: #EAEAEC;
-    --purple-logo: #7a75bc;
-    --blue-logo: #BBE9F9;
-    --my-shadow: 1px 4px 9px -6px rgba(37, 36, 55, 0.21);
-    //--my-anime: load-balls 1s cubic-bezier(.19, .57, .3, .98) infinite alternate;
-    --my-anime: load-balls 1.9s ease infinite;
-  } */
+  
 
   :root {
     --white-color: #EAEAEC;
@@ -59,5 +51,14 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  // toasts
+  body .Toastify .Toastify__toast-container .Toastify__toast--success {
+    background: var(--purple-logo);
+  }
+
+  body .Toastify .Toastify__toast-container .Toastify__toast--error {
+    background: #e0665d;
   }
 `;

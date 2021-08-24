@@ -7,6 +7,7 @@ import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import SupervisedUserCircleRoundedIcon from '@material-ui/icons/SupervisedUserCircleRounded';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import LoaderBalls from '../../components/LoaderBalls';
 import api from '../../services/api';
 import {
@@ -41,6 +42,8 @@ export default function CreateUsers(props) {
 	const [emailItsOk, setEmailItsOk] = useState(false);
 	const [passwordItsOk, setPasswordItsOk] = useState(false);
 
+	const [isLoadIcons, setIsLoadingIcons] = useState(false);
+
 	useEffect(() => {
 		async function getUserById(id) {
 			setName('');
@@ -48,6 +51,7 @@ export default function CreateUsers(props) {
 			setEmail('');
 
 			if (id !== 'create' && id !== '') {
+				setIsLoadingIcons(true);
 				await api.get(`/users/${id}`).then((res) => {
 					setName(res.data.name);
 					setUserName(res.data.username);
@@ -56,6 +60,8 @@ export default function CreateUsers(props) {
 					setEmailItsOk(true);
 					setUserNameItsOk(true);
 					setNameItsOk(true);
+
+					setIsLoadingIcons(false);
 				});
 				return;
 			}
@@ -96,26 +102,24 @@ export default function CreateUsers(props) {
 			setUserName('');
 			setEmail('');
 			setPassword('');
-			props.handleDisplay();
+			// props.handleDisplay();
 		} else {
-			alert('Dados Incorretos');
+			toast.error('Dados Incorretos');
 			return;
 		}
 	}
 
 	// Faz Cadastro
 	function handleUpdateUser(id) {
-		alert('Atualizando usuário...');
-
 		if (nameItsOk && userNameItsOk && emailItsOk) {
 			dispatch(actionUpdateUserRequest(id, name, userName, email, password));
 			setName('');
 			setUserName('');
 			setEmail('');
 			// setPassword('');
-			props.handleDisplay();
+			// props.handleDisplay();
 		} else {
-			alert('Dados Incorretos');
+			toast.error('Dados Incorretos');
 			return;
 		}
 	}
@@ -196,11 +200,20 @@ export default function CreateUsers(props) {
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
-										<AccountCircle
+										{isLoadIcons ? (
+											<LoaderBalls size={20} fill={'#7a75bc'} />
+										) : (
+											<AccountCircle
+												style={{
+													fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
+												}}
+											/>
+										)}
+										{/* <AccountCircle
 											style={{
 												fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
 											}}
-										/>
+										/> */}
 									</InputAdornment>
 								),
 							}}
@@ -217,13 +230,17 @@ export default function CreateUsers(props) {
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
-										<PersonRoundedIcon
-											style={{
-												fill: `${
-													userName === '' ? '#7a75bc' : userNameItsOk ? '#7a75bc' : '#e0665d'
-												}`,
-											}}
-										/>
+										{isLoadIcons ? (
+											<LoaderBalls size={20} fill={'#7a75bc'} />
+										) : (
+											<PersonRoundedIcon
+												style={{
+													fill: `${
+														userName === '' ? '#7a75bc' : userNameItsOk ? '#7a75bc' : '#e0665d'
+													}`,
+												}}
+											/>
+										)}
 									</InputAdornment>
 								),
 							}}
@@ -240,11 +257,15 @@ export default function CreateUsers(props) {
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
-										<EmailRoundedIcon
-											style={{
-												fill: `${email === '' ? '#7a75bc' : emailItsOk ? '#7a75bc' : '#e0665d'}`,
-											}}
-										/>
+										{isLoadIcons ? (
+											<LoaderBalls size={20} fill={'#7a75bc'} />
+										) : (
+											<EmailRoundedIcon
+												style={{
+													fill: `${email === '' ? '#7a75bc' : emailItsOk ? '#7a75bc' : '#e0665d'}`,
+												}}
+											/>
+										)}
 									</InputAdornment>
 								),
 							}}

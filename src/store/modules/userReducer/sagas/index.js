@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../../../services/api';
 import history from '../../../../services/history';
@@ -21,22 +22,19 @@ function* sagaLoginUser({ usr, pass }) {
 		);
 
 		const myToken = response.data.token;
-		yield put(actionLoginSuccess(myToken));
+		yield put(actionLoginSuccess(myToken, usr));
 		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 		history.push('/dashboard');
-
-		alert(myToken);
 	} catch (error) {
-		//LANÇAR ERRO AQUI
-
 		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		alert(`Erro: ${error}`);
+		toast.error('Credenciais Inválidas');
 	}
 }
 
 function* sagaAddUser({ name, username, email, password }) {
 	try {
-		yield put(changeLoading(true));
+		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		const response = yield call(() =>
 			api.post('/users', {
 				name,
@@ -48,21 +46,19 @@ function* sagaAddUser({ name, username, email, password }) {
 
 		const message = response.data.message;
 		yield put(actionAddUserSuccess(message));
-		yield put(changeLoading(false));
-		alert(message);
-	} catch (error) {
-		//LANÇAR ERRO AQUI
+		toast.success(message);
 
-		yield put(changeLoading(false));
-		alert(`Erro: ${error}`);
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	} catch (error) {
+		toast.error('Desculpe, algo deu errado. Tente novamente!');
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	}
 }
 
 function* sagaUpdateUser({ id, name, username, email, password }) {
 	try {
-		yield put(changeLoading(true));
+		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-		alert(`Saga ID: ${id}`);
 		const response = yield call(() =>
 			api.put(`users/${id}`, {
 				name,
@@ -75,31 +71,28 @@ function* sagaUpdateUser({ id, name, username, email, password }) {
 		const message = response.data.message;
 
 		yield put(actionUpdateUserSuccess(message));
-		yield put(changeLoading(false));
+		toast.success(message);
 
-		alert(message);
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	} catch (error) {
-		//LANÇAR ERRO AQUI
-
-		yield put(changeLoading(false));
-		alert(`Erro: ${error}`);
+		toast.error('Desculpe! Tente novamente.');
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	}
 }
 
 function* sagaDeleteUser({ id }) {
 	try {
-		yield put(changeLoading(true));
+		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 		const response = yield call(() => api.delete(`/users/${id}`));
-
 		const message = response.data.message;
 		yield put(actionDeleteUserSuccess(message));
-		yield put(changeLoading(false));
-		alert(message);
+		toast.success(message);
+
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	} catch (error) {
-		//LANÇAR ERRO AQUI
-		yield put(changeLoading(false));
-		alert(`Erro: ${error}`);
+		toast.error('Desculpe! Tente novamente.');
+		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	}
 }
 

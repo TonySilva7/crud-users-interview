@@ -25,24 +25,22 @@ export default function myReducer(state = initialState, action) {
 		case types.LOGIN_SUCCESS:
 			return produce(state, (draft) => {
 				draft.token = action.token;
+				draft.user.username = action.username;
 			});
 
 		case types.ADD_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.message = action.message;
-				alert(draft.message);
 			});
 
 		case types.UPDATE_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.message = action.message;
-				alert(draft.message);
 			});
 
 		case types.DELETE_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.message = action.message;
-				alert(draft.message);
 			});
 
 		default:

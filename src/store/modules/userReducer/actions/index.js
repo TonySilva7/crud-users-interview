@@ -16,10 +16,11 @@ export function actionLoginRequest(usr, pass) {
 	};
 }
 
-export function actionLoginSuccess(token) {
+export function actionLoginSuccess(token, usr) {
 	return {
 		type: types.LOGIN_SUCCESS,
 		token,
+		username: usr,
 	};
 }
 
