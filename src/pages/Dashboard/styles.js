@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const WrapMain = styled.main`
-	/* border: solid 2px red; */
-
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -20,11 +18,11 @@ export const WrapMain = styled.main`
 `;
 
 export const WrapAside = styled.aside`
-	/* border: solid 2px green; */
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: 20%;
+	width: 21%;
+	/* border-radius: 1rem; */
 	transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);
 	transform: translateX(${(props) => `-${props.margin}rem`});
 
@@ -66,16 +64,20 @@ export const WrapAside = styled.aside`
 		/* justify-content: center; */
 
 		box-sizing: border-box;
+		border-radius: 0 0 0.7rem 0.7rem;
 		padding: 1rem;
 		height: 100%;
 		background: linear-gradient(2deg, #bcb3cf 34%, #dfc2f260 100%);
 
 		& > div {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 			justify-content: space-evenly;
 			width: 65%;
 			color: var(--charcoal-color);
+			padding-bottom: 1rem;
+			border-bottom: solid 1px #bcb3cf;
 
 			p {
 				font-weight: 500;
@@ -86,13 +88,16 @@ export const WrapAside = styled.aside`
 			}
 		}
 
-		& > a {
+		& > button {
 			display: flex;
 			align-items: center;
 			justify-content: space-evenly;
+			background: none;
+			border: none;
 
 			width: 35%;
 			font-weight: bold;
+			font-size: 1rem;
 			color: var(--charcoal-color);
 			margin-top: 1rem;
 			transition: all 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -121,7 +126,6 @@ export const WrapAside = styled.aside`
 `;
 
 export const WrapArticle = styled.article`
-	/* border: solid 2px purple; */
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -217,6 +221,18 @@ export const WrapSection = styled.section`
 		color: var(--charcoal-color);
 		background-color: var(--white-color);
 		box-shadow: var(--my-shadow);
+		position: relative;
+
+		& > div {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+
+			height: 5rem;
+			background-color: #eaeaec70;
+			width: 100%;
+		}
 
 		thead {
 			border-bottom: solid 2px var(--white-color);

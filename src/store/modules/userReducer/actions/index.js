@@ -1,9 +1,19 @@
 import types from './types';
 
+// ........... IsLOADING ..................
 export function changeLoading(bool) {
 	return {
 		type: types.CHANGE_LOADING,
 		isLoading: bool,
+	};
+}
+
+// ........... LOGOUT ..................
+export function actionLogout(username, token) {
+	return {
+		type: types.LOGOUT_SUCCESS,
+		username,
+		token,
 	};
 }
 

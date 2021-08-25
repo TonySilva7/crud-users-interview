@@ -7,12 +7,11 @@ import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
 // -----------------------------------------------------------------------
 import { useDispatch, useSelector } from 'react-redux';
-// -----------------------------------------------------------------------
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CreateUsers from '../../components/CreateUsers';
+import LoaderBalls from '../../components/LoaderBalls';
 import api from '../../services/api';
-import { actionDeleteUserRequest } from '../../store/modules/userReducer/actions';
+import { actionDeleteUserRequest, actionLogout } from '../../store/modules/userReducer/actions';
 // -----------------------------------------------------------------------
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
@@ -27,23 +26,28 @@ export default function Dashboard() {
 	const [users, setUsers] = useState([]);
 	const [dataButton, setDataButton] = useState('');
 	const isLoading = useSelector((state) => state.userReducer.isLoading);
+	const [isLoadingDataTable, setIsLoadingDataTable] = useState(false);
 
 	useEffect(() => {
 		setMargin(0);
 		toast.success(`Seja Bem Vindo(a) ${username} 😊`, {
-			position: toast.POSITION.TOP_CENTER,
+			position: toast.POSITION.BOTTOM_LEFT,
 		});
 	}, [username]);
 
 	useEffect(() => {
 		//.... REQUISIÇÃO AQUI!!!!
 		async function getAllUsers() {
+			setIsLoadingDataTable(true);
+
 			api.defaults.headers.token = myToken;
 
 			await api
 				.get('/users')
 				.then((response) => setUsers(response.data))
 				.catch((err) => alert(err));
+
+			setIsLoadingDataTable(false);
 		}
 
 		getAllUsers();
@@ -79,9 +83,9 @@ export default function Dashboard() {
 						<p>Bem vindo(a), </p>
 						<h3>{username}</h3>
 					</div>
-					<Link to='/'>
+					<button onClick={() => dispatch(actionLogout('', ''))}>
 						Sair <ExitToAppRoundedIcon />
-					</Link>
+					</button>
 				</footer>
 			</WrapAside>
 			<WrapArticle margin={margin}>
@@ -106,30 +110,36 @@ export default function Dashboard() {
 							</tr>
 						</thead>
 
-						<tbody>
-							{users.map((user) => (
-								<tr key={user._id}>
-									<td data-label='Id'>
-										{user._id.substr(0, 3) + '...' + user._id.substr(user._id.length - 3)}
-									</td>
-									<td data-label='Nome'>{user.name}</td>
-									<td data-label='UserName'>{user.username}</td>
-									<td data-label='Email'>{user.email}</td>
-									<td data-label='Admin'>{user.admin ? 'Sim' : 'Não'}</td>
-									<td data-label='#'>
-										<button onClick={() => handleRequestButton(user._id)}>
-											<CreateRoundedIcon />
-										</button>
-										<button onClick={() => dispatch(actionDeleteUserRequest(user._id))}>
-											<DeleteForeverRoundedIcon />
-										</button>
-										{/* <Link to={`/dashboard`} style={{}}>
+						{isLoadingDataTable ? (
+							<div>
+								<LoaderBalls size={30} fill='#7a75bc' />
+							</div>
+						) : (
+							<tbody>
+								{users.map((user) => (
+									<tr key={user._id}>
+										<td data-label='Id'>
+											{user._id.substr(0, 3) + '...' + user._id.substr(user._id.length - 3)}
+										</td>
+										<td data-label='Nome'>{user.name}</td>
+										<td data-label='UserName'>{user.username}</td>
+										<td data-label='Email'>{user.email}</td>
+										<td data-label='Admin'>{user.admin ? 'Sim' : 'Não'}</td>
+										<td data-label='#'>
+											<button onClick={() => handleRequestButton(user._id)}>
+												<CreateRoundedIcon />
+											</button>
+											<button onClick={() => dispatch(actionDeleteUserRequest(user._id))}>
+												<DeleteForeverRoundedIcon />
+											</button>
+											{/* <Link to={`/dashboard`} style={{}}>
 										Icon
 									</Link> */}
-									</td>
-								</tr>
-							))}
-						</tbody>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						)}
 					</table>
 				</WrapSection>
 			</WrapArticle>

@@ -28,6 +28,12 @@ export default function myReducer(state = initialState, action) {
 				draft.user.username = action.username;
 			});
 
+		case types.LOGOUT_SUCCESS:
+			return produce(state, (draft) => {
+				draft.token = action.token;
+				draft.user.username = action.username;
+			});
+
 		case types.ADD_USER_SUCCESS:
 			return produce(state, (draft) => {
 				draft.message = action.message;

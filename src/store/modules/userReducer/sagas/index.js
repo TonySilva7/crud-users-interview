@@ -83,6 +83,7 @@ function* sagaUpdateUser({ id, name, username, email, password }) {
 function* sagaDeleteUser({ id }) {
 	try {
 		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		toast.info('Processando solicitação...');
 
 		const response = yield call(() => api.delete(`/users/${id}`));
 		const message = response.data.message;
