@@ -22,7 +22,6 @@ export const WrapAside = styled.aside`
 	flex-direction: column;
 	height: 100%;
 	width: 21%;
-	/* border-radius: 1rem; */
 	transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);
 	transform: translateX(${(props) => `-${props.margin}rem`});
 
@@ -61,7 +60,6 @@ export const WrapAside = styled.aside`
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		/* justify-content: center; */
 
 		box-sizing: border-box;
 		border-radius: 0 0 0.7rem 0.7rem;
@@ -211,6 +209,17 @@ export const WrapSection = styled.section`
 		}
 	}
 
+	& > div {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.7rem;
+
+		height: 8rem;
+		background-color: #eaeaec70;
+		width: 100%;
+	}
+
 	table {
 		border-collapse: collapse;
 		border: solid 1px var(--white-color);
@@ -222,17 +231,6 @@ export const WrapSection = styled.section`
 		background-color: var(--white-color);
 		box-shadow: var(--my-shadow);
 		position: relative;
-
-		& > div {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			position: absolute;
-
-			height: 5rem;
-			background-color: #eaeaec70;
-			width: 100%;
-		}
 
 		thead {
 			border-bottom: solid 2px var(--white-color);
@@ -254,7 +252,6 @@ export const WrapSection = styled.section`
 
 		tbody {
 			& > tr:nth-child(odd) {
-				/* background-color: #bbe9f990; */
 				background-color: #b7cee7;
 			}
 			& > tr:nth-child(even) {
@@ -282,7 +279,6 @@ export const WrapSection = styled.section`
 						display: inline-block;
 						border-radius: 100%;
 						vertical-align: middle;
-						/* box-shadow: var(--my-shadow); */
 						box-shadow: -2px 7px 9px -6px rgba(37, 36, 55, 0.4) inset;
 
 						svg {
@@ -310,7 +306,6 @@ export const WrapSection = styled.section`
 						}
 						&:nth-child(2):hover {
 							& > svg {
-								/* transform: rotate(-90deg); */
 								transform: scale(1.2);
 							}
 						}

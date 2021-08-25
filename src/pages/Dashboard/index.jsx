@@ -5,22 +5,19 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded';
 import SettingsRoundedIcon from '@material-ui/icons/SettingsRounded';
 import React, { useEffect, useState } from 'react';
-// -----------------------------------------------------------------------
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import CreateUsers from '../../components/CreateUsers';
 import LoaderBalls from '../../components/LoaderBalls';
 import api from '../../services/api';
 import { actionDeleteUserRequest, actionLogout } from '../../store/modules/userReducer/actions';
-// -----------------------------------------------------------------------
 import { WrapArticle, WrapAside, WrapMain, WrapSection } from './styles';
 
 export default function Dashboard() {
-	// -----------------------------------------------------------------------
 	const myToken = useSelector((state) => state.userReducer.token);
 	const username = useSelector((state) => state.userReducer.user.username);
 	const dispatch = useDispatch();
-	// -----------------------------------------------------------------------
+
 	const [margin, setMargin] = useState(15);
 	const [display, setDisplay] = useState('none');
 	const [users, setUsers] = useState([]);
@@ -36,7 +33,6 @@ export default function Dashboard() {
 	}, [username]);
 
 	useEffect(() => {
-		//.... REQUISIÇÃO AQUI!!!!
 		async function getAllUsers() {
 			setIsLoadingDataTable(true);
 
@@ -91,30 +87,30 @@ export default function Dashboard() {
 			<WrapArticle margin={margin}>
 				<header>
 					<SettingsRoundedIcon />
-					<h1>Users</h1>
+					<h1>Usuários</h1>
 				</header>
 				<WrapSection margin={margin}>
 					<button onClick={() => handleRequestButton('create')}>
 						<PersonAddRoundedIcon />
 						<h2>Cadastrar</h2>
 					</button>
-					<table>
-						<thead>
-							<tr>
-								<th scope='col'>Id</th>
-								<th scope='col'>Nome</th>
-								<th scope='col'>UserName</th>
-								<th scope='col'>Email</th>
-								<th scope='col'>Admin</th>
-								<th scope='col'>#</th>
-							</tr>
-						</thead>
+					{isLoadingDataTable ? (
+						<div>
+							<LoaderBalls size={30} fill='#7a75bc' />
+						</div>
+					) : (
+						<table>
+							<thead>
+								<tr>
+									<th scope='col'>Id</th>
+									<th scope='col'>Nome</th>
+									<th scope='col'>UserName</th>
+									<th scope='col'>Email</th>
+									<th scope='col'>Admin</th>
+									<th scope='col'>#</th>
+								</tr>
+							</thead>
 
-						{isLoadingDataTable ? (
-							<div>
-								<LoaderBalls size={30} fill='#7a75bc' />
-							</div>
-						) : (
 							<tbody>
 								{users.map((user) => (
 									<tr key={user._id}>
@@ -139,8 +135,8 @@ export default function Dashboard() {
 									</tr>
 								))}
 							</tbody>
-						)}
-					</table>
+						</table>
+					)}
 				</WrapSection>
 			</WrapArticle>
 		</WrapMain>

@@ -15,6 +15,7 @@ import {
 	actionUpdateUserRequest,
 } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
+import { validEmail, validName, validPass, validUserName } from '../../utils';
 import { WrapCreateUsers, WrapUsersForm } from './styles';
 
 export default function CreateUsers(props) {
@@ -26,17 +27,6 @@ export default function CreateUsers(props) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const rgxName = /[A-Z][a-z]* [A-Z][a-z]*/;
-	const rgxUserName = /^[a-z0-9]+(?:[ _-][a-z0-9]+)*$/;
-	const rgxMail =
-		/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	const rgxPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%\])]).{8,}$/g;
-
-	const validName = name.match(rgxName) && name !== '' && name.length >= 3;
-	const validUserName = userName.match(rgxUserName) && userName !== '' && userName.length >= 3;
-	const validEmail = email !== '' && email.match(rgxMail);
-	const validPass = password !== '' && password.match(rgxPassword);
-
 	const [nameItsOk, setNameItsOk] = useState(false);
 	const [userNameItsOk, setUserNameItsOk] = useState(false);
 	const [emailItsOk, setEmailItsOk] = useState(false);
@@ -45,14 +35,14 @@ export default function CreateUsers(props) {
 	const [isLoadIcons, setIsLoadingIcons] = useState(false);
 
 	useEffect(() => {
-		async function getUserById(id) {
+		async function getUserById(hasId) {
 			setName('');
 			setUserName('');
 			setEmail('');
 
-			if (id !== 'create' && id !== '') {
+			if (hasId !== 'create' && hasId !== '') {
 				setIsLoadingIcons(true);
-				await api.get(`/users/${id}`).then((res) => {
+				await api.get(`/users/${hasId}`).then((res) => {
 					setName(res.data.name);
 					setUserName(res.data.username);
 					setEmail(res.data.email);
@@ -125,7 +115,7 @@ export default function CreateUsers(props) {
 	}
 
 	function handleNameValidation() {
-		if (validName) {
+		if (validName(name)) {
 			setNameItsOk(true);
 		} else {
 			setNameItsOk(false);
@@ -133,7 +123,7 @@ export default function CreateUsers(props) {
 	}
 
 	function handleUserNameValidation() {
-		if (validUserName) {
+		if (validUserName(userName)) {
 			setUserNameItsOk(true);
 		} else {
 			setUserNameItsOk(false);
@@ -141,7 +131,7 @@ export default function CreateUsers(props) {
 	}
 
 	function handleEmailValidation() {
-		if (validEmail) {
+		if (validEmail(email)) {
 			setEmailItsOk(true);
 		} else {
 			setEmailItsOk(false);
@@ -149,7 +139,7 @@ export default function CreateUsers(props) {
 	}
 
 	function handlePasswordValidation() {
-		if (validPass) {
+		if (validPass(password)) {
 			setPasswordItsOk(true);
 		} else {
 			setPasswordItsOk(false);
