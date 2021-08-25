@@ -6,6 +6,7 @@ export const WrapMain = styled.main`
 	justify-content: space-between;
 	padding: 0.5rem;
 	height: 100vh;
+	position: relative;
 
 	background: rgb(234, 234, 236);
 	background: radial-gradient(
@@ -15,6 +16,17 @@ export const WrapMain = styled.main`
 		rgba(107, 108, 163, 1) 69%,
 		rgba(52, 64, 85, 1) 100%
 	);
+
+	& > span {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background: rgba(0, 0, 0, 0.4);
+		z-index: 50;
+		transition: all 300 ms;
+	}
 `;
 
 export const WrapAside = styled.aside`

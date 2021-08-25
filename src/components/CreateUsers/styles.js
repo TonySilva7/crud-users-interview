@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import { WrapForm } from '../../styles/FormStyles';
 
 export const WrapCreateUsers = styled.section`
-	display: ${(props) => props.display};
+	display: flex;
+	transform: translateY(${(props) => (props.display === 'none' ? '-50rem' : '2rem')});
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
 	position: absolute;
+	transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);
 
-	background-color: rgba(0, 0, 0, 0.7);
-	z-index: 100;
+	z-index: ${(props) => (props.display === 'none' ? '-100' : '100')};
 
 	top: 0;
 	bottom: 0;

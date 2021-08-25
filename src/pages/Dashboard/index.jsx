@@ -68,6 +68,8 @@ export default function Dashboard() {
 				handleDisplay={handleDisplay}
 			/>
 
+			<span style={{ display: `${display}` }}></span>
+
 			<WrapAside margin={margin}>
 				<header>
 					<picture>
