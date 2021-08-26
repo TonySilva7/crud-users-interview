@@ -20,7 +20,7 @@ export const WrapForm = styled.footer`
 			align-items: inherit;
 
 			width: 25rem;
-			padding: 2rem;
+			padding: 1.3rem 2rem;
 			border-radius: 0 0 1rem 1rem;
 			box-shadow: 0px 22px 17px 0px rgba(37, 36, 55, 0.21);
 

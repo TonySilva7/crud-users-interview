@@ -3,13 +3,14 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {
 	default as AccountCircle,
-	default as AccountCircleIcon,
+	default as AccountCircleIcon
 } from '@material-ui/icons/AccountCircle';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import InfoRegister from '../../components/InfoRegister';
 import LoaderBalls from '../../components/LoaderBalls';
 import { actionAddUserRequest, actionLoginRequest } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
@@ -195,6 +196,11 @@ export default function SignIn() {
 								onChange={(e) => handleChangeName(e.target.value)}
 							/>
 
+							<InfoRegister
+								hasError={isChecked && name.length >= 1 && nameItsOk === false}
+								message='Insira Nome e Sobrenome'
+							/>
+
 							<InputLogin
 								id='username'
 								fullWidth
@@ -219,6 +225,11 @@ export default function SignIn() {
 								onChange={(e) => handleUserName(e.target.value)}
 							/>
 
+							<InfoRegister
+								hasError={isChecked && userName.length >= 1 && userNameItsOk === false}
+								message='Apenas letras minúsculas e números.'
+							/>
+
 							<InputLogin
 								id='email'
 								fullWidth
@@ -239,6 +250,11 @@ export default function SignIn() {
 								style={{ display: `${isChecked ? 'flex' : 'none'}` }}
 								value={email}
 								onChange={(e) => handleChangeMail(e.target.value)}
+							/>
+
+							<InfoRegister
+								hasError={isChecked && email.length >= 1 && emailItsOk === false}
+								message='Ops! Insira um email válido.'
 							/>
 
 							<InputLogin
@@ -265,14 +281,20 @@ export default function SignIn() {
 								onChange={(e) => handleChangePassword(e.target.value)}
 							/>
 
+							<InfoRegister
+								hasError={isChecked && password.length >= 1 && passwordItsOk === false}
+								message='Insira pelo menos 8 dígitos, incluindo caracter especial e alguma letra
+								maíuscula.'
+							/>
+
 							<FormControlLabel
+								style={{ height: '2rem' }}
 								control={
 									<Checkbox
-										// onChange={(e) => handleChangeCheck(e.target.checked)}
-										onChange={(e) => handleChangeCheck(e)}
-										checked={isChecked}
 										id='checkRegister'
+										checked={isChecked}
 										color='primary'
+										onChange={(e) => handleChangeCheck(e)}
 									/>
 								}
 								label='Não tenho uma conta!'

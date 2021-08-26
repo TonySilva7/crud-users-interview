@@ -187,6 +187,7 @@ export default function CreateUsers(props) {
 							label='Nome *'
 							variant='outlined'
 							type='text'
+							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -217,6 +218,7 @@ export default function CreateUsers(props) {
 							label='Usuário *'
 							variant='outlined'
 							type='text'
+							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -244,6 +246,7 @@ export default function CreateUsers(props) {
 							label='Email *'
 							variant='outlined'
 							type='text'
+							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -271,7 +274,10 @@ export default function CreateUsers(props) {
 							variant='outlined'
 							type='password'
 							autoComplete='current-password'
-							style={{ display: `${props.title === 'Atualizar' ? 'none' : 'flex'}` }}
+							style={{
+								display: `${props.title === 'Atualizar' ? 'none' : 'flex'}`,
+								marginBottom: '1rem',
+							}}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>

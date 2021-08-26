@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { WrapForm } from '../../styles/FormStyles';
 
 export const WrapContainer = styled.div`
-	min-height: 100vh;
+	height: 100vh;
 	display: flex;
 
 	background: rgb(234, 234, 236);
@@ -19,7 +19,7 @@ export const WrapContainer = styled.div`
 		align-items: center;
 		justify-content: center;
 
-		margin: 6rem auto;
+		margin: 4rem auto;
 	}
 `;
 
@@ -36,28 +36,29 @@ export const LoginArea = styled.header`
 		display: flex;
 		border-radius: 1rem 1rem 0 0;
 		background-color: var(--charcoal-color);
-		height: 6rem;
+		height: 5rem;
 		width: inherit;
 	}
 
 	div {
 		position: absolute;
+		justify-content: center;
+		align-items: center;
 		background-color: var(--white-color);
 		border-radius: 50%;
-		height: 7rem;
-		width: 7rem;
+		height: 6.1rem;
+		width: 6.1rem;
 		transform: scale(0.9);
 
 		top: -3.5rem;
 
 		svg {
-			font-size: 8rem;
-			margin-left: -0.5rem;
-			margin-top: -0.5rem;
+			font-size: 7rem;
+			margin-left: -0.45rem;
+			margin-top: -0.45rem;
 
 			path {
 				margin: 0;
-				/* fill: var(--purple-logo); */
 				stroke-width: 0.5px;
 			}
 		}

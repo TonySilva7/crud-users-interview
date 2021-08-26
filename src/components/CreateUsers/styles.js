@@ -29,7 +29,7 @@ export const WrapCreateUsers = styled.section`
 		border-bottom: solid 2px var(--white-color);
 		background: linear-gradient(339deg, rgba(122, 117, 188, 1) 34%, rgba(82, 136, 214, 1) 100%);
 
-		margin-top: 5rem;
+		margin-top: 2rem;
 
 		& > button {
 			display: flex;

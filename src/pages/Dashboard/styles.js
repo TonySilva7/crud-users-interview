@@ -7,6 +7,8 @@ export const WrapMain = styled.main`
 	padding: 0.5rem;
 	height: 100vh;
 	position: relative;
+	height: 100vh;
+	overflow: hidden;
 
 	background: rgb(234, 234, 236);
 	background: radial-gradient(
