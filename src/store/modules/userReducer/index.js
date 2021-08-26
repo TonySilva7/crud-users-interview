@@ -7,10 +7,10 @@ const initialState = {
 	isLoading: false,
 	user: {
 		id: '',
-		name: '',
+		// name: '',
 		username: '',
-		email: '',
-		password: '',
+		// email: '',
+		// password: '',
 	},
 };
 
