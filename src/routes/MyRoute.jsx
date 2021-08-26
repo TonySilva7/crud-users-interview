@@ -1,6 +1,19 @@
-import { Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Redirect, Route } from 'react-router-dom';
 
-export default function MyRoute({ component: Component, isPrivate, ...rest }) {
-	// Usei essa configuração caso precisasse de rotas privadas! :)
-	return <Route {...rest} render={(props) => <Component {...props} />} />;
+export default function MyRoute({ component: Component, ...rest }) {
+	const isLoggedIn = !!useSelector((state) => state.userReducer.token);
+
+	return (
+		<Route
+			{...rest}
+			render={(props) =>
+				isLoggedIn ? (
+					<Component {...props} />
+				) : (
+					<Redirect to={{ pathname: '/', state: { from: props.location } }} />
+				)
+			}
+		/>
+	);
 }
