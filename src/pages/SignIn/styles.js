@@ -4,6 +4,8 @@ import { WrapForm } from '../../styles/FormStyles';
 export const WrapContainer = styled.div`
 	height: 100vh;
 	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	background: rgb(234, 234, 236);
 	background: radial-gradient(
@@ -19,7 +21,7 @@ export const WrapContainer = styled.div`
 		align-items: center;
 		justify-content: center;
 
-		margin: 4rem auto;
+		/* margin: 3.2rem auto; */
 	}
 `;
 
@@ -38,9 +40,11 @@ export const LoginArea = styled.header`
 		background-color: var(--charcoal-color);
 		height: 5rem;
 		width: inherit;
+		margin-top: 0;
 	}
 
 	div {
+		display: flex;
 		position: absolute;
 		justify-content: center;
 		align-items: center;
@@ -50,12 +54,10 @@ export const LoginArea = styled.header`
 		width: 6.1rem;
 		transform: scale(0.9);
 
-		top: -3.5rem;
+		top: -3.2rem;
 
 		svg {
 			font-size: 7rem;
-			margin-left: -0.45rem;
-			margin-top: -0.45rem;
 
 			path {
 				margin: 0;

@@ -3,7 +3,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {
 	default as AccountCircle,
-	default as AccountCircleIcon
+	default as AccountCircleIcon,
 } from '@material-ui/icons/AccountCircle';
 import EmailRoundedIcon from '@material-ui/icons/EmailRounded';
 import LockRoundedIcon from '@material-ui/icons/LockRounded';
@@ -61,7 +61,7 @@ export default function SignIn() {
 		}
 	}
 
-	// Faz Cadastro
+	// REGISTER
 	function handleRegister() {
 		if (nameItsOk && userNameItsOk && emailItsOk && passwordItsOk) {
 			dispatch(actionAddUserRequest(name, userName, email, password));
@@ -69,10 +69,7 @@ export default function SignIn() {
 			setUserName('');
 			setEmail('');
 			setPassword('');
-
 			setIsChecked(false);
-
-			// handleChangeCheck(false);
 		} else {
 			alert('Dados Incorretos');
 			return;
@@ -111,37 +108,31 @@ export default function SignIn() {
 		}
 	}
 
-	// Seta Name
 	function handleChangeName(name) {
 		setName(name);
 		handleNameValidation();
 	}
 
-	// Seta UserName
 	function handleUserName(userName) {
 		setUserName(userName);
 		handleUserNameValidation();
 	}
 
-	// Seta Email
 	function handleChangeMail(email) {
 		setEmail(email);
 		handleEmailValidation();
 	}
 
-	// Seta Senha
 	function handleChangePassword(password) {
 		setPassword(password);
 		handlePasswordValidation();
 	}
 
-	// Seta check do checkbox
 	function handleChangeCheck(check) {
 		setName('');
 		setUserName('');
 		setEmail('');
 		setPassword('');
-
 		setIsChecked(!isChecked);
 	}
 
@@ -207,7 +198,6 @@ export default function SignIn() {
 								label='Usuário *'
 								variant='outlined'
 								type='text'
-								// disabled={isChecked}
 								InputProps={{
 									startAdornment: (
 										<InputAdornment position='start'>
@@ -254,7 +244,7 @@ export default function SignIn() {
 
 							<InfoRegister
 								hasError={isChecked && email.length >= 1 && emailItsOk === false}
-								message='Ops! Insira um email válido.'
+								message='Insira um email válido.'
 							/>
 
 							<InputLogin

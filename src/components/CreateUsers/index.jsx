@@ -16,6 +16,7 @@ import {
 } from '../../store/modules/userReducer/actions';
 import { ButtonSign, InputLogin } from '../../styles/customMUI';
 import { validEmail, validName, validPass, validUserName } from '../../utils';
+import InfoRegister from '../InfoRegister';
 import { WrapCreateUsers, WrapUsersForm } from './styles';
 
 export default function CreateUsers(props) {
@@ -76,9 +77,6 @@ export default function CreateUsers(props) {
 			handleCreateUser();
 			return;
 		} else {
-			// Busca usuário no BD e carrega os dados
-			// const response = async () => await api.get(`/users/${props.dataButton}`);
-			// const user = response.data;
 			handleUpdateUser(props.dataButton);
 			return;
 		}
@@ -92,22 +90,19 @@ export default function CreateUsers(props) {
 			setUserName('');
 			setEmail('');
 			setPassword('');
-			// props.handleDisplay();
 		} else {
 			toast.error('Dados Incorretos');
 			return;
 		}
 	}
 
-	// Faz Cadastro
+	// UPDATE
 	function handleUpdateUser(id) {
 		if (nameItsOk && userNameItsOk && emailItsOk) {
 			dispatch(actionUpdateUserRequest(id, name, userName, email, password));
 			setName('');
 			setUserName('');
 			setEmail('');
-			// setPassword('');
-			// props.handleDisplay();
 		} else {
 			toast.error('Dados Incorretos');
 			return;
@@ -146,35 +141,40 @@ export default function CreateUsers(props) {
 		}
 	}
 
-	// Seta Name
 	function handleChangeName(value) {
 		setName(value);
 		handleNameValidation();
 	}
 
-	// Seta UserName
 	function handleUserName(userName) {
 		setUserName(userName);
 		handleUserNameValidation();
 	}
 
-	// Seta Email
 	function handleChangeMail(value) {
 		setEmail(value);
 		handleEmailValidation();
 	}
 
-	// Seta Senha
 	function handleChangePassword(value) {
 		setPassword(value);
 		handlePasswordValidation();
+	}
+
+	function handleModal() {
+		setName('');
+		setUserName('');
+		setEmail('');
+		setPassword('');
+		props.handleDisplay();
 	}
 
 	return (
 		<WrapCreateUsers display={props.display}>
 			<header>
 				<SupervisedUserCircleRoundedIcon style={{ fontSize: '4rem', color: '#d9d9e4' }} />
-				<button onClick={props.handleDisplay}>
+				{/* <button onClick={props.handleDisplay}> */}
+				<button onClick={handleModal}>
 					<CancelRoundedIcon />
 				</button>
 			</header>
@@ -187,7 +187,6 @@ export default function CreateUsers(props) {
 							label='Nome *'
 							variant='outlined'
 							type='text'
-							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -200,16 +199,15 @@ export default function CreateUsers(props) {
 												}}
 											/>
 										)}
-										{/* <AccountCircle
-											style={{
-												fill: `${name === '' ? '#7a75bc' : nameItsOk ? '#7a75bc' : '#e0665d'}`,
-											}}
-										/> */}
 									</InputAdornment>
 								),
 							}}
 							value={name}
 							onChange={(e) => handleChangeName(e.target.value)}
+						/>
+						<InfoRegister
+							hasError={name.length >= 1 && nameItsOk === false}
+							message='Insira Nome e Sobrenome'
 						/>
 
 						<InputLogin
@@ -218,7 +216,6 @@ export default function CreateUsers(props) {
 							label='Usuário *'
 							variant='outlined'
 							type='text'
-							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -239,6 +236,10 @@ export default function CreateUsers(props) {
 							value={userName}
 							onChange={(e) => handleUserName(e.target.value)}
 						/>
+						<InfoRegister
+							hasError={userName.length >= 1 && userNameItsOk === false}
+							message='Apenas letras minúsculas e números.'
+						/>
 
 						<InputLogin
 							id='email'
@@ -246,7 +247,6 @@ export default function CreateUsers(props) {
 							label='Email *'
 							variant='outlined'
 							type='text'
-							style={{ marginBottom: '1rem' }}
 							InputProps={{
 								startAdornment: (
 									<InputAdornment position='start'>
@@ -265,6 +265,10 @@ export default function CreateUsers(props) {
 							value={email}
 							onChange={(e) => handleChangeMail(e.target.value)}
 						/>
+						<InfoRegister
+							hasError={email.length >= 1 && emailItsOk === false}
+							message='Insira um email válido.'
+						/>
 
 						<InputLogin
 							id='password'
@@ -276,7 +280,6 @@ export default function CreateUsers(props) {
 							autoComplete='current-password'
 							style={{
 								display: `${props.title === 'Atualizar' ? 'none' : 'flex'}`,
-								marginBottom: '1rem',
 							}}
 							InputProps={{
 								startAdornment: (
@@ -292,6 +295,11 @@ export default function CreateUsers(props) {
 								),
 							}}
 							onChange={(e) => handleChangePassword(e.target.value)}
+						/>
+						<InfoRegister
+							hasError={password.length >= 1 && passwordItsOk === false}
+							message='Insira pelo menos 8 dígitos, incluindo caracter especial e alguma letra
+								maíuscula.'
 						/>
 					</div>
 
