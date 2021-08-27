@@ -157,7 +157,6 @@ export const WrapArticle = styled.article`
 		box-shadow: var(--my-shadow);
 		box-sizing: border-box;
 		border: solid 1px #eaeaec90;
-		/* background: linear-gradient(7deg, #eaeaec 23%, #bbe9f970 100%); */
 		background: var(--white-color);
 
 		transition: all 500ms cubic-bezier(0.17, 0.84, 0.68, 1.11);

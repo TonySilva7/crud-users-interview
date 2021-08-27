@@ -2,18 +2,6 @@ import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-//.......
-// const myTheme = createTheme({
-// 	palette: {
-// 		primary: {
-// 			main: '#eee6',
-// 		},
-// 		secondary: {
-// 			main: '#11cb5f',
-// 		},
-// 	},
-// });
-
 // INPUTS
 export const InputLogin = withStyles((theme) => ({
 	root: {

@@ -13,7 +13,7 @@ import types from '../actions/types';
 
 function* sagaLoginUser({ usr, pass }) {
 	try {
-		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(true));
 		const response = yield call(() =>
 			api.post('/auth', {
 				username: usr,
@@ -23,18 +23,18 @@ function* sagaLoginUser({ usr, pass }) {
 
 		const myToken = response.data.token;
 		yield put(actionLoginSuccess(myToken, usr));
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 
 		history.push('/dashboard');
 	} catch (error) {
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 		toast.error('Credenciais Inválidas');
 	}
 }
 
 function* sagaAddUser({ name, username, email, password }) {
 	try {
-		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(true));
 		const response = yield call(() =>
 			api.post('/users', {
 				name,
@@ -48,10 +48,10 @@ function* sagaAddUser({ name, username, email, password }) {
 		yield put(actionAddUserSuccess(message));
 		toast.success(message);
 
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 	} catch (error) {
 		toast.error('Desculpe, algo deu errado. Tente novamente!');
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 	}
 }
 
@@ -82,7 +82,7 @@ function* sagaUpdateUser({ id, name, username, email, password }) {
 
 function* sagaDeleteUser({ id }) {
 	try {
-		yield put(changeLoading(true)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(true));
 		toast.info('Processando solicitação...');
 
 		const response = yield call(() => api.delete(`/users/${id}`));
@@ -90,10 +90,10 @@ function* sagaDeleteUser({ id }) {
 		yield put(actionDeleteUserSuccess(message));
 		toast.success(message);
 
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 	} catch (error) {
 		toast.error('Desculpe! Tente novamente.');
-		yield put(changeLoading(false)); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		yield put(changeLoading(false));
 	}
 }
 

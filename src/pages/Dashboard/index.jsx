@@ -92,7 +92,6 @@ export default function Dashboard() {
 					<h1>Usuários</h1>
 				</header>
 				<WrapSection margin={margin}>
-					{/* <button onClick={() => handleRequestButton('create')}> */}
 					<button onClick={() => handleRequestButton('')}>
 						<PersonAddRoundedIcon />
 						<h2>Cadastrar</h2>

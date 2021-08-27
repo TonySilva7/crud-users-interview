@@ -5,13 +5,10 @@ const initialState = {
 	token: '',
 	message: '',
 	isLoading: false,
-	isLoggedIn: true,
+
 	user: {
 		id: '',
-		// name: '',
 		username: '',
-		// email: '',
-		// password: '',
 	},
 };
 
