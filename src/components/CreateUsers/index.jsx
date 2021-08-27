@@ -41,7 +41,7 @@ export default function CreateUsers(props) {
 			setUserName('');
 			setEmail('');
 
-			if (hasId !== 'create' && hasId !== '') {
+			if (!!hasId) {
 				setIsLoadingIcons(true);
 				await api.get(`/users/${hasId}`).then((res) => {
 					setName(res.data.name);
@@ -58,7 +58,7 @@ export default function CreateUsers(props) {
 			}
 		}
 
-		if (props.dataButton === 'create') {
+		if (props.dataButton === '') {
 			setName('');
 			setUserName('');
 			setEmail('');
@@ -71,13 +71,12 @@ export default function CreateUsers(props) {
 	// Main CREATE/UPDATE
 	function handleSubmit(event) {
 		event.preventDefault();
-		if (props.dataButton === '') {
-			return;
-		} else if (props.dataButton === 'create') {
-			handleCreateUser();
+
+		if (!!props.dataButton) {
+			handleUpdateUser(props.dataButton);
 			return;
 		} else {
-			handleUpdateUser(props.dataButton);
+			handleCreateUser();
 			return;
 		}
 	}
@@ -166,20 +165,19 @@ export default function CreateUsers(props) {
 		setUserName('');
 		setEmail('');
 		setPassword('');
-		props.handleDisplay();
+		props.handleReqBtn('');
 	}
 
 	return (
 		<WrapCreateUsers display={props.display}>
 			<header>
 				<SupervisedUserCircleRoundedIcon style={{ fontSize: '4rem', color: '#d9d9e4' }} />
-				{/* <button onClick={props.handleDisplay}> */}
 				<button onClick={handleModal}>
 					<CancelRoundedIcon />
 				</button>
 			</header>
 			<WrapUsersForm>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={(e) => handleSubmit(e)}>
 					<div>
 						<InputLogin
 							id='name'
