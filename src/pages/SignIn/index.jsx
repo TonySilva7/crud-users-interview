@@ -10,6 +10,7 @@ import LockRoundedIcon from '@material-ui/icons/LockRounded';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import InfoRegister from '../../components/InfoRegister';
 import LoaderBalls from '../../components/LoaderBalls';
 import { actionAddUserRequest, actionLoginRequest } from '../../store/modules/userReducer/actions';
@@ -56,7 +57,7 @@ export default function SignIn() {
 		if (userNameItsOk && passwordItsOk) {
 			dispatch(actionLoginRequest(userName, password));
 		} else {
-			alert('Dados Incorretos');
+			toast.error('Dados Incorretos');
 			return;
 		}
 	}
@@ -71,7 +72,7 @@ export default function SignIn() {
 			setPassword('');
 			setIsChecked(false);
 		} else {
-			alert('Dados Incorretos');
+			toast.error('Dados Incorretos');
 			return;
 		}
 	}

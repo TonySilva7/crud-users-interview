@@ -17,7 +17,6 @@ export default function myReducer(state = initialState, action) {
 		case types.CHANGE_LOADING:
 			return produce(state, (draft) => {
 				draft.isLoading = action.isLoading;
-				console.log('LOADING: ', draft.isLoading);
 			});
 
 		case types.LOGIN_SUCCESS:

@@ -41,7 +41,7 @@ export default function Dashboard() {
 			await api
 				.get('/users')
 				.then((response) => setUsers(response.data))
-				.catch((err) => alert(err));
+				.catch((err) => toast.error(err));
 
 			setIsLoadingDataTable(false);
 		}
